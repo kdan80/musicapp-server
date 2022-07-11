@@ -27,9 +27,8 @@
 /workbench
 /workbench/
 /workbench/*
-/media/
 media/
-/media
+requests/
 
 # production
 /build
