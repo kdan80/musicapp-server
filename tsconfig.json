@@ -18,9 +18,9 @@
     "skipLibCheck": true,
     "baseUrl": "./",                                  
     "paths": {
-      "@routes/*": ["src/routes/*"]
+      "@routes": ["src/routes/index"]
     }                                 
   },
-  "include": ["next-env.d.ts", "twin.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"],
+  //"include": ["next-env.d.ts", "twin.d.ts", "**/*.ts", "**/*.tsx"],
+  //"exclude": ["node_modules"],
 }

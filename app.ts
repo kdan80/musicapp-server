@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
-import queue from '@routes/queue';
+import { queue } from '@routes';
 
 const app: Express = express();
 app.use(cors());
