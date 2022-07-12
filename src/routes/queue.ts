@@ -31,8 +31,19 @@ router.get('/', (req: Request, res: Response) => {
             // HTTP Status 206 for Partial Content
             res.writeHead(206, headers);
 
-            const stream = fs.createReadStream('/home/kdan80/Projects/portfolio/musicapp-server/media/tots.mp3', {start, end});
-            stream.pipe(res);
+            const readStream = fs.createReadStream('/home/kdan80/Projects/portfolio/musicapp-server/media/tots.mp3', {start, end});
+            
+            readStream.pipe(res);
+
+            readStream.on('end', () => {
+                console.log('stream end');
+            });
+
+            readStream.on('error', () => {
+                console.log('error');
+            });
+            
+            
 
     } catch(error: any) {
         process.stderr.write(error);
