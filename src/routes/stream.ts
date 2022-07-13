@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import fs from 'fs';
+import { pipeline } from 'stream';
 import path from 'path';
 
 
@@ -13,7 +14,8 @@ router.get('/', (req: Request, res: Response) => {
                 res.status(400).send("Requires Range header");
             }
 
-            const fileSize = fs.statSync('/home/kdan80/Projects/portfolio/musicapp-server/media/tots.mp3').size;
+            console.log(`Dir: ${__dirname}`)
+            const fileSize = fs.statSync(`${process.env.MEDIA}/tots.mp3`).size;
 
             const CHUNK_SIZE = 10 ** 6; // 1MB
             const start = Number(range.replace(/\D/g, ""));
@@ -31,20 +33,17 @@ router.get('/', (req: Request, res: Response) => {
             // HTTP Status 206 for Partial Content
             res.writeHead(206, headers);
 
-            const readStream = fs.createReadStream('/home/kdan80/Projects/portfolio/musicapp-server/media/tots.mp3', {start, end});
-            
-            readStream.pipe(res);
+            const readStream = fs.createReadStream(`${process.env.MEDIA}/tots.mp3`, {start, end});
 
-            readStream.on('end', () => {
-                console.log('stream end');
-            });
-
-            readStream.on('error', () => {
-                console.log('error');
-            });
-            
-            
-
+            // Use pipeline() not readStream.pipe(res) as the latter can lead to memory leaks
+            pipeline(
+                readStream, 
+                res, 
+                (err) => {
+                    if(err) return console.log(err);
+                    console.log('Pipeline closed...');
+                }
+            )
     } catch(error: any) {
         process.stderr.write(error);
     }

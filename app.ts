@@ -1,10 +1,10 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
-import { queue } from '@routes';
+import { stream } from '@routes';
 
 const app: Express = express();
 app.use(cors());
 
-app.use('/queue', queue);
+app.use('/stream', stream);
 
 export default app;

@@ -1,1 +1,1 @@
-export { default as queue }         from './queue';
+export { default as stream }         from './stream';
