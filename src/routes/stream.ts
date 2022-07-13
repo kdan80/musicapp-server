@@ -6,16 +6,17 @@ import path from 'path';
 
 const router = express.Router();
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/:song', (req: Request, res: Response) => {
     try {
+            const song = req.params.song;
 
             const range: any = req.headers.range;
             if (!range) {
                 res.status(400).send("Requires Range header");
             }
 
-            console.log(`Dir: ${__dirname}`)
-            const fileSize = fs.statSync(`${process.env.MEDIA}/tots.mp3`).size;
+            console.log(`${process.env.MEDIA}/${song}.mp3`)
+            const fileSize = fs.statSync(`${process.env.MEDIA}/${song}.mp3`).size;
 
             const CHUNK_SIZE = 10 ** 6; // 1MB
             const start = Number(range.replace(/\D/g, ""));
@@ -33,7 +34,7 @@ router.get('/', (req: Request, res: Response) => {
             // HTTP Status 206 for Partial Content
             res.writeHead(206, headers);
 
-            const readStream = fs.createReadStream(`${process.env.MEDIA}/tots.mp3`, {start, end});
+            const readStream = fs.createReadStream(`${process.env.MEDIA}/${song}.mp3`, {start, end});
 
             // Use pipeline() not readStream.pipe(res) as the latter can lead to memory leaks
             pipeline(

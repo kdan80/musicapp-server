@@ -5,10 +5,15 @@ const router = express.Router();
 router.get('/', (req: Request, res: Response) => {
 
     const playlist = [
-        'tots.mp3',
-        'wc.mp3'
+        "alexandria",
+        "contingency",
+        "package",
+        "overture",
+        "spear",
     ]
 
     res.send(playlist);
 
 });
+
+export default router;
