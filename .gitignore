@@ -30,6 +30,8 @@
 media/
 requests/
 prisma/dev.db
+prisma/migrations
+prisma/dev.db-journal
 *.db
 
 # production

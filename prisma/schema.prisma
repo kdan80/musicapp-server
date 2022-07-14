@@ -10,4 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
+model Song {
+  id            String @id @default(uuid())
+  artist        String
+  title         String
+  album         String?
+  releaseDate   Int?
+  genre         String?
+  location      String
+}
