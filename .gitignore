@@ -29,6 +29,8 @@
 /workbench/*
 media/
 requests/
+prisma/*.db
+*.db
 
 # production
 /build
