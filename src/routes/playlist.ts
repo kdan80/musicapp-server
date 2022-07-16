@@ -1,18 +1,14 @@
 import express, { Request, Response } from 'express';
+import prisma from '@prisma';
 
 const router = express.Router();
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/', async(req: Request, res: Response) => {
 
-    const playlist = [
-        "alexandria",
-        "contingency",
-        "package",
-        "overture",
-        "spear",
-    ]
+    const playlist = await prisma.song.findMany();
 
-    res.send(playlist);
+
+    res.status(200).json(playlist);
 
 });
 
