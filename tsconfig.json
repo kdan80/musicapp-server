@@ -19,7 +19,8 @@
     "skipLibCheck": true,
     "baseUrl": "./",                                  
     "paths": {
-      "@routes": ["src/routes/index"]
+      "@routes": ["src/routes/index"],
+      "@prisma": ["prisma/prisma"]
     }                                 
   },
   //"include": ["next-env.d.ts", "twin.d.ts", "**/*.ts", "**/*.tsx"],
