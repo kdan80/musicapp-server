@@ -20,7 +20,7 @@
     "baseUrl": "./",                                  
     "paths": {
       "@routes": ["src/routes/index"],
-      "@prisma": ["prisma/prisma"]
+      "@config": ["/src/config/config"]
     }                                 
   },
   //"include": ["next-env.d.ts", "twin.d.ts", "**/*.ts", "**/*.tsx"],

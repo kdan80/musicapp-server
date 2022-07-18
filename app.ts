@@ -1,9 +1,11 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import { stream, playlist, createSong } from '@routes';
-import { json } from 'stream/consumers';
+import start from './src/db/connect';
 
 const app: Express = express();
+
+start();
 app.use(cors());
 app.use(express.json());
 
