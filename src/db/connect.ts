@@ -1,5 +1,5 @@
 import { connect } from 'mongoose';
-import config from 'src/config/config';
+import config from '@config';
 
 
 const start = async() => {

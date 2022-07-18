@@ -5,7 +5,8 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "incremental": true,                              
     "target": "es6",                                 
-    "module": "commonjs",                               
+    "module": "commonjs", 
+    //"noPropertyAccessFromIndexSignature": true,                              
     "rootDir": "./",                                 
     "moduleResolution": "node", 
     "isolatedModules": true,                      
@@ -20,9 +21,9 @@
     "baseUrl": "./",                                  
     "paths": {
       "@routes": ["src/routes/index"],
-      "@config": ["/src/config/config"]
+      "@config": ["src/config/config"]
     }                                 
   },
-  //"include": ["next-env.d.ts", "twin.d.ts", "**/*.ts", "**/*.tsx"],
-  //"exclude": ["node_modules"],
+  "include": ["*.d.ts", "src/*.d.ts"],
+  "exclude": ["node_modules"],
 }

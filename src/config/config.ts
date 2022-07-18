@@ -1,8 +1,9 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 interface Mongo {
     uri: string
+}
+
+interface Server {
+    port: string
 }
 
 const MONGO_OPTIONS = {
@@ -15,13 +16,17 @@ const MONGO_OPTIONS = {
     retryWrites: false
 };
 
+const MONGODB_URI = process.env.MONGODB_URI ?? '';
+
 const MONGO: Mongo = {
     //options: MONGO_OPTIONS,
-    uri: 'mongodb://127.0.0.1/musicapp'
+    uri: MONGODB_URI
 }
 
-const SERVER = {
-    port: process.env.PORT
+const SERVER_PORT = process.env.PORT ?? '';
+
+const SERVER: Server = {
+    port: SERVER_PORT
 }
 
 const config = {
