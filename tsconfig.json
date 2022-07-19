@@ -21,7 +21,8 @@
     "baseUrl": "./",                                  
     "paths": {
       "@routes": ["src/routes/index"],
-      "@config": ["src/config/config"]
+      "@config": ["src/config/config"],
+      "@models": ["src/models/index"]
     }                                 
   },
   "include": ["*.d.ts", "src/*.d.ts"],
