@@ -9,7 +9,7 @@ router.post('/', async(req: Request, res: Response) => {
         const { username, email, password } = req.body;
 
         const userAlreadyExists = await BaseUser.findOne({email});
-        if(userAlreadyExists) return res.status(400).send("Email is already taken");
+        if(userAlreadyExists) return res.status(400).send('Email is already taken');
 
         const candidateUser = await validateUser({
             username: username,

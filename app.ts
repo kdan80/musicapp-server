@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
-import { stream, playlist, createSong } from '@routes';
+import { stream, playlist, createSong, register } from '@routes';
 import start from './src/db/connect';
 
 const app: Express = express();
@@ -11,6 +11,7 @@ app.use(express.json());
 
 app.use('/createSong', createSong);
 app.use('/playlist', playlist);
+app.use('/register', register);
 app.use('/stream', stream);
 
 export default app;
