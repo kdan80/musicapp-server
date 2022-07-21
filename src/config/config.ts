@@ -6,6 +6,17 @@ interface Server {
     port: string
 }
 
+interface Session {
+    secret: string
+}
+
+interface Config {
+    mongo: Mongo,
+    server: Server,
+    session: Session,
+    node: string
+}
+
 const MONGO_OPTIONS = {
     useUnifiedTopology: true,
     useNewUrlParser: true,
@@ -29,9 +40,17 @@ const SERVER: Server = {
     port: SERVER_PORT
 }
 
-const config = {
+const SESSION_SECRET = process.env.SESSION_SECRET ?? '';
+
+const SESSION: Session = {
+    secret: SESSION_SECRET
+}
+
+const config: Config = {
     mongo: MONGO,
-    server: SERVER
+    server: SERVER,
+    session: SESSION,
+    node: process.env.NODE_ENV ?? ''
 }
 
 export default config;
