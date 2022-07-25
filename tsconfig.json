@@ -22,7 +22,7 @@
       "@routes": ["src/routes/index"],
       "@config": ["src/config/config"],
       "@models": ["src/models/index"],
-      "@users": ["src/modules/users/index"]
+      "@users": ["src/users/index"]
     }                                 
   },
   "include": ["**/*"],
