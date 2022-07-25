@@ -11,11 +11,16 @@ router.post('/', async(req: Request, res: Response) => {
         const userAlreadyExists = await BaseUser.findOne({email});
         if(userAlreadyExists) return res.status(400).send('Email is already taken');
 
-        const candidateUser = await validateUser({
-            username: username,
-            email: email,
-            password: password
-        });
+        const candidateUser = {
+            username,
+            email,
+            password
+        }
+        // const candidateUser = await validateUser({
+        //     username: username,
+        //     email: email,
+        //     password: password
+        // });
         const user = await BaseUser.create(candidateUser);
 
         req.session.email = user.email;

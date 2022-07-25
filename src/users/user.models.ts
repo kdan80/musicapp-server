@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import Joi from 'joi';
 import bcrypt from 'bcrypt';
+import data from './users.data.json'
 
 interface IBaseUser {
     username: string,
@@ -14,26 +15,33 @@ interface IBaseUser {
 const baseUserSchema = new mongoose.Schema<IBaseUser>({
     username: {
         type: String,
-        minlength: 5,
-        maxlength: 20,
+        minlength: [5, data.username_err_min],
+        maxlength: [20, data.username_err_max],
         index: true,
-        required: true
+        required: [true, data.username_err_req]
     },
     email: {
         type: String,
-        minlength: 3,
-        maxlength: 254,
-        required: true,
-        unique: true
+        minlength: [3, data.email_err_min],
+        maxlength: [254, data.email_err_max],
+        required: [true, data.email_err_req],
+        unique: true,
+        validate: {
+            validator: (val: string) =>  {
+                const email_regex = new RegExp(data.email_regex, 'i');
+                return email_regex.test(val)
+            },
+            message: data.email_err_val
+        }
     },
     password: {
         type: String,
-        required: true
+        minlength:[8, data.password_err_min],
+        required: [true, data.password_err_req]
     },
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 300
     },
     isAdmin: {
         type: Boolean,
@@ -59,7 +67,7 @@ baseUserSchema.pre("save", async function(next){
 // Compile a model from our schema. This will be used to construct documents and read from documents
 const BaseUser = mongoose.model<IBaseUser>('User', baseUserSchema);
 
-const validateUser = (user: any) => {
+const validateUser = (user: IBaseUser) => {
 
     const schema = Joi.object({
         username: Joi.string().min(5).max(20).required(),
