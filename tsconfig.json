@@ -21,7 +21,8 @@
     "paths": {
       "@routes": ["src/routes/index"],
       "@config": ["src/config/config"],
-      "@models": ["src/models/index"]
+      "@models": ["src/models/index"],
+      "@users": ["src/modules/users/index"]
     }                                 
   },
   "include": ["**/*"],
