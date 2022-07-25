@@ -2,7 +2,8 @@ import express, { Express, Request, Response } from 'express';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import cors from 'cors';
-import { login, stream, playlist, createSong, register } from '@routes';
+import { stream, playlist, createSong } from '@routes';
+import {login, register} from '@users'
 import config from '@config';
 import start from './src/db/connect';
 

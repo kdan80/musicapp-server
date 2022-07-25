@@ -17,9 +17,9 @@ router.get("/", (req, res) => {
     }
 });
 
-router.post("/", async(req: Request, res: Response) => {
+router.post("/", async( req: Request, res: Response ) => {
 
-    const {email,password} = req.body;
+    const {email, password} = req.body;
 
     const user = await User.BaseUser.findOne({email});
     if(!user) return res.status(401).send("Username or password was incorrect");
