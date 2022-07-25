@@ -27,7 +27,6 @@ router.post("/", async(req: Request, res: Response) => {
     const userIsAuthenticated = await bcrypt.compare(password, user.password);
     if(!userIsAuthenticated) return res.status(401).send("Username or password was incorrect");
 
-
     req.session._id = user._id;
     req.session.email = email;
     req.session.username = user.username;
