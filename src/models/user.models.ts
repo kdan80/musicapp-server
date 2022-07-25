@@ -1,4 +1,4 @@
-import mongoose, { Schema} from 'mongoose';
+import mongoose from 'mongoose';
 import Joi from 'joi';
 import bcrypt from 'bcrypt';
 
@@ -11,7 +11,7 @@ interface IBaseUser {
 }
 
 // Define a schema ie the shape a document will take in the db
-const baseUserSchema = new Schema<IBaseUser>({
+const baseUserSchema = new mongoose.Schema<IBaseUser>({
     username: {
         type: String,
         minlength: 5,
@@ -57,7 +57,7 @@ baseUserSchema.pre("save", async function(next){
 });
 
 // Compile a model from our schema. This will be used to construct documents and read from documents
-const BaseUser = mongoose.model('User', baseUserSchema);
+const BaseUser = mongoose.model<IBaseUser>('User', baseUserSchema);
 
 const validateUser = (user: any) => {
 

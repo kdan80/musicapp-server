@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 
 const router = express.Router();
 
-
 // router.use("/", (req, res, next) => {
 //     if(req.session && req.session.isAuthenticated) return res.redirect("/dashboard");
 //     next();
@@ -22,7 +21,7 @@ router.post("/", async(req: Request, res: Response) => {
 
     const {email,password} = req.body;
 
-    const user = await User.findOne({email});
+    const user = await User.BaseUser.findOne({email});
     if(!user) return res.status(401).send("Username or password was incorrect");
     
     const userIsAuthenticated = await bcrypt.compare(password, user.password);

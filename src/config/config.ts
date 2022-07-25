@@ -14,7 +14,7 @@ interface Config {
     mongo: Mongo,
     server: Server,
     session: Session,
-    node: string
+    node_env: string
 }
 
 const MONGO_OPTIONS = {
@@ -50,7 +50,7 @@ const config: Config = {
     mongo: MONGO,
     server: SERVER,
     session: SESSION,
-    node: process.env.NODE_ENV ?? ''
+    node_env: process.env.NODE_ENV ?? ''
 }
 
 export default config;
