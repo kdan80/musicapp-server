@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import Joi from 'joi';
 import bcrypt from 'bcrypt';
-import data from './users.data.json'
+import data from './users.data.json';
+import config from './config';
 
 interface IBaseUser {
     username: string,
@@ -13,36 +14,65 @@ interface IBaseUser {
 
 // Define a schema ie the shape a document will take in the db
 const baseUserSchema = new mongoose.Schema<IBaseUser>({
+    
     username: {
         type: String,
-        minlength: [5, data.username_err_min],
-        maxlength: [20, data.username_err_max],
+        minlength: [
+            config.username.min, 
+            config.username.err_min
+        ],
+        maxlength: [
+            config.username.max, 
+            config.username.err_max
+        ],
         index: true,
-        required: [true, data.username_err_req]
+        required: [
+            true, 
+            config.username.err_req
+        ]
     },
+
     email: {
         type: String,
-        minlength: [3, data.email_err_min],
-        maxlength: [254, data.email_err_max],
-        required: [true, data.email_err_req],
+        minlength: [
+            config.email.min, 
+            config.email.err_min
+        ],
+        maxlength: [
+            config.email.max, 
+            config.email.err_max
+        ],
+        required: [
+            true, 
+            config.email.err_req
+        ],
         unique: true,
         validate: {
             validator: (val: string) =>  {
-                const email_regex = new RegExp(data.email_regex, 'i');
+                const email_regex = new RegExp(config.email.regex, 'i');
                 return email_regex.test(val)
             },
-            message: data.email_err_val
+            message: config.email.err_val
         }
     },
+
     password: {
         type: String,
-        minlength:[8, data.password_err_min],
-        required: [true, data.password_err_req]
+        minlength:[
+            config.password.min, 
+            config.password.err_min
+        ],
+        required: [
+            true, 
+            data.password_err_req
+        ]
     },
+
     createdAt: {
         type: Date,
         default: Date.now,
     },
+    
     isAdmin: {
         type: Boolean,
         default: false

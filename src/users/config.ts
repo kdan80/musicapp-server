@@ -1,0 +1,45 @@
+const username_min_chars: number = 5;
+const username_max_chars: number = 20;
+
+const email_min_chars: number = 3;
+const email_max_chars: number = 254;
+
+const password_min_chars: number = 8;
+const password_max_chars: number = 254;
+
+
+const username = {
+    min: username_min_chars,
+    max: username_max_chars,
+
+    err_min: `Username must be a minimum of ${username_min_chars} characters`,
+    err_max: `Username must be a maximum of ${username_max_chars} characters`,
+    err_req: `Username is required`,
+}
+
+const email = {
+    min: email_min_chars,
+    max: email_max_chars,
+
+    regex: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$",
+    err_min: `Email must be a minimum of ${email_min_chars} characters`,
+    err_max: `Email must be a maximum of ${email_max_chars} characters`,
+    err_req: `Email is required`,
+    err_val: `Not a valid email`,
+}
+
+const password = {
+    min: password_min_chars,
+    max: password_max_chars,
+
+    err_min: `Password must contain at least ${password_max_chars} characters`,
+    err_req: `Password is required`
+}
+
+const config = {
+    username,
+    email,
+    password
+}
+
+export default config;
