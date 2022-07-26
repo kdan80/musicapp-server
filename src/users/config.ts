@@ -6,6 +6,12 @@ const email_max_chars: number = 254;
 
 const password_min_chars: number = 10;
 
+const login = {
+
+    msg_success: `Login successful`,
+
+    err_fail: `Username or password was incorrect`
+}
 
 const username = {
     min: username_min_chars,
@@ -37,7 +43,8 @@ const password = {
 const config = {
     username,
     email,
-    password
+    password,
+    login
 }
 
 export default config;
