@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import Joi from 'joi';
 import bcrypt from 'bcrypt';
-import data from './users.data.json';
 import config from './config';
 
 interface IBaseUser {
@@ -64,7 +63,7 @@ const baseUserSchema = new mongoose.Schema<IBaseUser>({
         ],
         required: [
             true, 
-            data.password_err_req
+            config.password.err_req
         ]
     },
 
@@ -72,7 +71,7 @@ const baseUserSchema = new mongoose.Schema<IBaseUser>({
         type: Date,
         default: Date.now,
     },
-    
+
     isAdmin: {
         type: Boolean,
         default: false
