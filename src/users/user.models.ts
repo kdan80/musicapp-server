@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import Joi from 'joi';
 import bcrypt from 'bcrypt';
 import config from './config';
 
@@ -65,7 +64,14 @@ const baseUserSchema = new mongoose.Schema<IBaseUser>({
         required: [
             true, 
             config.password.err_req
-        ]
+        ],
+        validate: {
+            validator: (val: string) =>  {
+                const password_regex = new RegExp(config.password.regex);
+                return password_regex.test(val)
+            },
+            message: config.password.err_val
+        }
     },
 
     createdAt: {
