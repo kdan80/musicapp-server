@@ -4,8 +4,7 @@ const username_max_chars: number = 20;
 const email_min_chars: number = 3;
 const email_max_chars: number = 254;
 
-const password_min_chars: number = 8;
-const password_max_chars: number = 254;
+const password_min_chars: number = 10;
 
 
 const username = {
@@ -30,9 +29,8 @@ const email = {
 
 const password = {
     min: password_min_chars,
-    max: password_max_chars,
 
-    err_min: `Password must contain at least ${password_max_chars} characters`,
+    err_min: `Password must contain at least ${password_min_chars} characters`,
     err_req: `Password is required`
 }
 

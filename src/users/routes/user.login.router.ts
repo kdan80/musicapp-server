@@ -9,14 +9,6 @@ const router = express.Router();
 //     next();
 // });
 
-router.get("/", (req, res) => {
-    try {
-        return res.redirect("/")
-    } catch(err) {
-        return res.send(err);
-    }
-});
-
 router.post("/", async( req: Request, res: Response ) => {
 
     const {email, password} = req.body;

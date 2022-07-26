@@ -16,17 +16,8 @@ router.post('/', async(req: Request, res: Response) => {
             email,
             password
         }
-        // const candidateUser = await validateUser({
-        //     username: username,
-        //     email: email,
-        //     password: password
-        // });
+        
         const user = await BaseUser.create(candidateUser);
-
-        req.session.email = user.email;
-        req.session.username = user.username;
-        req.session.message = "Account created successfully";
-        req.session.isAuthenticated = true;
 
         return res.status(201).json(user);
     } catch(err: any){

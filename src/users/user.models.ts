@@ -25,6 +25,7 @@ const baseUserSchema = new mongoose.Schema<IBaseUser>({
             config.username.err_max
         ],
         index: true,
+        unique: true,
         required: [
             true, 
             config.username.err_req
