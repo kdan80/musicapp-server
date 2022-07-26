@@ -5,10 +5,9 @@ const router = express.Router();
 
 router.post('/', async(req: Request, res: Response) => {
     try {
-        const { BaseUser, validateUser } = User;
         const { username, email, password } = req.body;
 
-        const userAlreadyExists = await BaseUser.findOne({email});
+        const userAlreadyExists = await User.findOne({email});
         if(userAlreadyExists) return res.status(400).send('Email is already taken');
 
         const candidateUser = {
@@ -17,7 +16,7 @@ router.post('/', async(req: Request, res: Response) => {
             password
         }
         
-        const user = await BaseUser.create(candidateUser);
+        const user = await User.create(candidateUser);
 
         return res.status(201).json(user);
     } catch(err: any){

@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { User } from '@users';
+import { User }  from '@users';
 import bcrypt from 'bcrypt';
 import config from '../config';
 
@@ -14,7 +14,7 @@ router.post("/", async( req: Request, res: Response ) => {
 
     const {email, password} = req.body;
 
-    const user = await User.BaseUser.findOne({email});
+    const user = await User.findOne({email});
     if(!user) return res.status(401).send(config.login.err_fail);
     
     const userIsAuthenticated = await bcrypt.compare(password, user.password);

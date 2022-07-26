@@ -97,22 +97,4 @@ baseUserSchema.pre("save", async function(next){
 // Compile a model from our schema. This will be used to construct documents and read from documents
 const BaseUser = mongoose.model<IBaseUser>('User', baseUserSchema);
 
-const validateUser = (user: IBaseUser) => {
-
-    const schema = Joi.object({
-        username: Joi.string().min(5).max(20).required(),
-        email: Joi.string().min(3).max(254).required(),
-        password: Joi.string()
-            .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"))
-            .required(), 
-      });
-    
-      return schema.validateAsync(user);
-};
-
-const User = {
-    BaseUser,
-    validateUser
-} 
-
-export default User;
+export default BaseUser;
