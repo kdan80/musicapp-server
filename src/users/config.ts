@@ -20,6 +20,13 @@ const login = {
     err_fail: `Username or password was incorrect`
 }
 
+const logout = {
+
+    msg_success: `Logout successful`,
+
+    err_fail: `An error occurred`
+}
+
 const username = {
     min: username_min_chars,
     max: username_max_chars,
@@ -61,7 +68,8 @@ const config = {
     username,
     email,
     password,
-    login
+    login,
+    logout
 }
 
 export default config;

@@ -2,8 +2,8 @@ import express, { Express, Request, Response } from 'express';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import cors from 'cors';
-import { stream, playlist, createSong } from '@routes';
-import {login, register} from '@users'
+import { stream, playlist, createSong, error } from '@routes';
+import {login, logout, register} from '@users'
 import config from '@config';
 import start from './src/db/connect';
 
@@ -33,6 +33,8 @@ app.use(express.json());
 
 app.use('/createSong', createSong);
 app.use('/login', login);
+app.use('/logout', logout);
+app.use('/error', error);
 app.use('/playlist', playlist);
 app.use('/register', register);
 app.use('/stream', stream);
