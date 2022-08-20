@@ -7,6 +7,7 @@ interface IBaseUser {
     password: string,
     createdAt: Date,
     isAdmin: boolean,
+    isGuest: boolean,
     email: string
 }
 
@@ -42,7 +43,7 @@ const baseUserSchema = new mongoose.Schema<IBaseUser>({
             config.email.err_max
         ],
         required: [
-            true, 
+            true,
             config.email.err_req
         ],
         unique: true,
@@ -80,6 +81,11 @@ const baseUserSchema = new mongoose.Schema<IBaseUser>({
     },
 
     isAdmin: {
+        type: Boolean,
+        default: false
+    },
+
+    isGuest: {
         type: Boolean,
         default: false
     }
