@@ -15,8 +15,8 @@ router.post('/', async(req: Request, res: Response, next: NextFunction) => {
     try {
         const { username, email, password } = req.body
 
-        const userAlreadyExists = await UserModel.findOne({email})
-        if(userAlreadyExists) return next(UserError.userAlreadyExists)
+        const userAlreadyExists = await UserModel.findOne({username})
+        if(userAlreadyExists) return next(UserError.userAlreadyExists())
 
         const candidateUser = {
             username,

@@ -7,10 +7,11 @@ export const errorHandler = (err: ErrorRequestHandler, req: Request, res: Respon
         return next(err)
     }
   
+    // If we know about the error return the specific code and message
     if (err instanceof UserError) {
       return res.status(err.code).json(err.message);
     }
   
-    // Generic error
+    // Otherwise we return a generic error
     return res.status(500).json('something went wrong');
   }
