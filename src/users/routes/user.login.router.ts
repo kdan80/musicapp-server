@@ -1,20 +1,21 @@
-import express, { Request, Response } from 'express'
-import { User }  from '@users'
+import express, { Request, Response, NextFunction } from 'express'
+import { UserModel }  from '@users'
 import bcrypt from 'bcrypt'
 import config from '../config'
 
 const router = express.Router()
 
-// router.use("/", (req, res, next) => {
-//     if(req.session && req.session.isAuthenticated) return res.redirect("/dashboard");
-//     next();
-// });
+// Middleware for detecting and handling if user if already logged in
+router.use('/', (req: Request, res: Response, next: NextFunction) => {
+    if(req.session && req.session.isAuthenticated) return res.status(200).send(config.login.msg_superfluous_login);
+    next();
+});
 
-router.post("/", async( req: Request, res: Response ) => {
+router.post('/', async( req: Request, res: Response ) => {
 
     const {email, password} = req.body
 
-    const user = await User.findOne({email})
+    const user = await UserModel.findOne({email})
     if(!user) return res.status(401).send(config.login.err_fail)
     
     const userIsAuthenticated = await bcrypt.compare(password, user.password)

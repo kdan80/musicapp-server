@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express'
-import { User } from '@users'
+import { UserModel } from '@users'
 
 const router = express.Router()
 
@@ -7,7 +7,7 @@ router.post('/', async(req: Request, res: Response) => {
     try {
         const { username, email, password } = req.body
 
-        const userAlreadyExists = await User.findOne({email})
+        const userAlreadyExists = await UserModel.findOne({email})
         if(userAlreadyExists) return res.status(400).send('Email is already taken')
 
         const candidateUser = {
@@ -16,7 +16,7 @@ router.post('/', async(req: Request, res: Response) => {
             password
         }
         
-        const user = await User.create(candidateUser)
+        const user = await UserModel.create(candidateUser)
 
         return res.status(201).json(user)
     } catch(err: any){

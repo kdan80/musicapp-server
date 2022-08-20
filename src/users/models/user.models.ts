@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
-import config from './config'
+import config from '../config'
 
 interface IBaseUser {
     username: string,

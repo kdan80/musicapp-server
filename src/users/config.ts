@@ -16,7 +16,7 @@ const minChars = `(?=.{${password_min_chars},})`
 const login = {
 
     msg_success: `Login successful`,
-
+    msg_superfluous_login: `User is already logged in`,
     err_fail: `Username or password was incorrect`
 }
 
