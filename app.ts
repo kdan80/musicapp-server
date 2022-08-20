@@ -28,9 +28,13 @@ app.use(session({
 }))
 
 start()
+
+// Middleware
 app.use(cors())
 app.use(express.json())
 
+
+// Routing
 app.use('/createSong', createSong)
 app.use('/user', UserRouter)
 app.use('/error', error)
