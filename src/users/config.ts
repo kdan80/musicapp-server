@@ -13,19 +13,19 @@ const atLeastOneSpecial = `(?=.*[!@#\$%\^&\*])`
 const minChars = `(?=.{${password_min_chars},})`
 
 
-const login = {
 
+
+const login = {
     msg_200_success: `Login successful`,
     msg_200_superfluous: `User is already logged in`,
     err_fail: `Username or password was incorrect`,
-    err_405_not_allowed: `Method not allowed`
+    err_405_not_allowed: `That method is not permitted on login route`
 }
 
 const logout = {
-
-    msg_success: `Logout successful`,
-
-    err_fail: `An error occurred`
+    msg_200_success: `Logout successful`,
+    err_fail: `An error occurred`,
+    err_405_not_allowed: `That method is not permitted on logout route`
 }
 
 const username = {

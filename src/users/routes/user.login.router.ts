@@ -2,7 +2,8 @@ import express, { Request, Response } from 'express'
 import { UserModel }  from '@users'
 import bcrypt from 'bcrypt'
 import config from '../config'
-import { permitted_methods, superfluous_login } from '../middleware/user.login.middleware'
+import { permitted_methods } from '../middleware/user.middleware'
+import { superfluous_login } from '../middleware/user.login.middleware'
 
 const router = express.Router()
 
