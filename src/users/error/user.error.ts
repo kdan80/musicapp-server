@@ -6,6 +6,14 @@ export class UserError {
       this.code = code;
       this.message = message;
     }
+
+    static isNotLoggedIn(){
+        return new UserError(401, 'You are not authorized to perform that operation')
+    }
+
+    static userAlreadyExists(){
+        return new UserError(400, 'An account with that username already exists')
+    }
   
     static badRequest(msg: string) {
       return new UserError(400, msg);

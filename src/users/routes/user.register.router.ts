@@ -1,6 +1,7 @@
-import express, { Request, Response } from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 import { permitted_methods } from '../middleware/user.middleware'
 import { UserModel } from '@users'
+import { UserError } from '../error/user.error'
 import config from '../config'
 
 const router = express.Router()
@@ -10,12 +11,12 @@ router.use(
     permitted_methods(['POST'], config.register.err_405_not_allowed)
 )
 
-router.post('/', async(req: Request, res: Response) => {
+router.post('/', async(req: Request, res: Response, next: NextFunction) => {
     try {
         const { username, email, password } = req.body
 
         const userAlreadyExists = await UserModel.findOne({email})
-        if(userAlreadyExists) return res.status(400).send('Email is already taken')
+        if(userAlreadyExists) return next(UserError.userAlreadyExists)
 
         const candidateUser = {
             username,
