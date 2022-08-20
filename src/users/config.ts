@@ -1,16 +1,16 @@
-const username_min_chars: number = 5;
-const username_max_chars: number = 20;
+const username_min_chars: number = 5
+const username_max_chars: number = 20
 
-const email_min_chars: number = 3;
-const email_max_chars: number = 254;
+const email_min_chars: number = 3
+const email_max_chars: number = 254
 
-const password_min_chars: number = 10;
-const regexStart = `^`;
-const atLeastOneLowercase = `(?=.*[a-z])`;
-const atLeastOneUppercase = `(?=.*[A-Z])`;
-const atLeastOneNumber = `(?=.*[0-9])`;
-const atLeastOneSpecial = `(?=.*[!@#\$%\^&\*])`;
-const minChars = `(?=.{${password_min_chars},})`;
+const password_min_chars: number = 10
+const regexStart = `^`
+const atLeastOneLowercase = `(?=.*[a-z])`
+const atLeastOneUppercase = `(?=.*[A-Z])`
+const atLeastOneNumber = `(?=.*[0-9])`
+const atLeastOneSpecial = `(?=.*[!@#\$%\^&\*])`
+const minChars = `(?=.{${password_min_chars},})`
 
 
 const login = {
@@ -70,4 +70,4 @@ const config = {
     logout
 }
 
-export default config;
+export default config

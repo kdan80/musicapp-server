@@ -1,13 +1,13 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
-import config from './config';
+import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
+import config from './config'
 
 interface IBaseUser {
     username: string,
     password: string,
     createdAt: Date,
     isAdmin: boolean,
-    email: string;
+    email: string
 }
 
 // Define a schema ie the shape a document will take in the db
@@ -48,7 +48,7 @@ const baseUserSchema = new mongoose.Schema<IBaseUser>({
         unique: true,
         validate: {
             validator: (val: string) =>  {
-                const email_regex = new RegExp(config.email.regex, 'i');
+                const email_regex = new RegExp(config.email.regex, 'i')
                 return email_regex.test(val)
             },
             message: config.email.err_val
@@ -67,7 +67,7 @@ const baseUserSchema = new mongoose.Schema<IBaseUser>({
         ],
         validate: {
             validator: (val: string) =>  {
-                const password_regex = new RegExp(config.password.regex);
+                const password_regex = new RegExp(config.password.regex)
                 return password_regex.test(val)
             },
             message: config.password.err_val
@@ -83,24 +83,24 @@ const baseUserSchema = new mongoose.Schema<IBaseUser>({
         type: Boolean,
         default: false
     }
-});
+})
 
 // Hash the incoming password before we save it
 baseUserSchema.pre('save', async function(next){
 
-    const user = this;
-    if (!user.isModified('password')) return next();
+    const user = this
+    if (!user.isModified('password')) return next()
 
     try {
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(user.password, salt);
-        return next();
+        const salt = await bcrypt.genSalt(10)
+        user.password = await bcrypt.hash(user.password, salt)
+        return next()
     } catch(err: any) {
-      return next(err);
+      return next(err)
     }
-});
+})
 
 // Compile a model from our schema. This will be used to construct documents and read from documents
-const BaseUser = mongoose.model<IBaseUser>('User', baseUserSchema);
+const BaseUser = mongoose.model<IBaseUser>('User', baseUserSchema)
 
-export default BaseUser;
+export default BaseUser
