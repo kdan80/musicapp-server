@@ -1,7 +1,6 @@
 import { connect } from 'mongoose';
 import config from '@config';
 
-
 const start = async() => {
     try {
         await connect(config.mongo.uri);

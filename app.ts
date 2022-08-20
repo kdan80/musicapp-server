@@ -1,20 +1,20 @@
-import express, { Express, Request, Response } from 'express';
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
-import cors from 'cors';
-import { stream, playlist, createSong, error } from '@routes';
-import {login, logout, register} from '@users'
-import config from '@config';
-import start from './src/db/connect';
+import express, { Express, Request, Response } from 'express'
+import session from 'express-session'
+import MongoStore from 'connect-mongo'
+import cors from 'cors'
+import { stream, playlist, createSong, error } from '@routes'
+import { UserRouter } from '@users'
+import config from '@config'
+import start from './src/db/connect'
 
 // Session store
-const sessionStore = MongoStore.create({ mongoUrl: config.mongo.uri });
+const sessionStore = MongoStore.create({ mongoUrl: config.mongo.uri })
 
 // App settings
-const app: Express = express();
-app.use(express.static(__dirname + '/public'));
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+const app: Express = express()
+app.use(express.static(__dirname + '/public'))
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.use(session({
     secret: config.session.secret,
     store: sessionStore,
@@ -27,16 +27,14 @@ app.use(session({
     }
 }))
 
-start();
-app.use(cors());
-app.use(express.json());
+start()
+app.use(cors())
+app.use(express.json())
 
-app.use('/createSong', createSong);
-app.use('/login', login);
-app.use('/logout', logout);
-app.use('/error', error);
-app.use('/playlist', playlist);
-app.use('/register', register);
-app.use('/stream', stream);
+app.use('/createSong', createSong)
+app.use('/user', UserRouter)
+app.use('/error', error)
+app.use('/playlist', playlist)
+app.use('/stream', stream)
 
 export default app;

@@ -62,8 +62,6 @@ const password = {
     err_val: `Password is invalid`,
 }
 
-console.log(password.regex)
-
 const config = {
     username,
     email,
