@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express'
+import express, { Request, Response } from 'express'
 import { UserModel }  from '@users'
 import bcrypt from 'bcrypt'
 import config from '../config'
