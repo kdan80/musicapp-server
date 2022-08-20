@@ -13,8 +13,6 @@ const atLeastOneSpecial = `(?=.*[!@#\$%\^&\*])`
 const minChars = `(?=.{${password_min_chars},})`
 
 
-
-
 const login = {
     msg_200_success: `Login successful`,
     msg_200_superfluous: `User is already logged in`,
@@ -26,6 +24,12 @@ const logout = {
     msg_200_success: `Logout successful`,
     err_fail: `An error occurred`,
     err_405_not_allowed: `That method is not permitted on logout route`
+}
+
+const register = {
+    msg_200_success: `User successfully registered`,
+    err_fail: `An error occurred`,
+    err_405_not_allowed: `That method is not permitted on register route`
 }
 
 const username = {
@@ -68,7 +72,8 @@ const config = {
     email,
     password,
     login,
-    logout
+    logout,
+    register
 }
 
 export default config

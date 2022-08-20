@@ -1,7 +1,14 @@
 import express, { Request, Response } from 'express'
+import { permitted_methods } from '../middleware/user.middleware'
 import { UserModel } from '@users'
+import config from '../config'
 
 const router = express.Router()
+
+// Middleware
+router.use(
+    permitted_methods(['POST'], config.register.err_405_not_allowed)
+)
 
 router.post('/', async(req: Request, res: Response) => {
     try {
