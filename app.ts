@@ -37,4 +37,4 @@ app.use('/error', error)
 app.use('/playlist', playlist)
 app.use('/stream', stream)
 
-export default app;
+export default app
