@@ -2,14 +2,14 @@ import express, { Request, Response, NextFunction } from 'express'
 import { UserModel }  from '@users'
 import bcrypt from 'bcrypt'
 import config from '../config'
+import { permitted_methods } from '../middleware/user.middleware'
 
 const router = express.Router()
 
-// Middleware for rejecting inappropriate HTTP requests
-router.use('/', (req: Request, res: Response, next: NextFunction) => {
-    if (!['GET', 'HEAD', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) return res.status(405).send(config.login.err_405_not_allowed)
-    return next()
-})
+// Middleware
+router.use(
+    permitted_methods(['POST'], config.login.err_405_not_allowed)
+)
 
 // Middleware for detecting and handling if user is already logged in
 router.use('/', (req: Request, res: Response, next: NextFunction) => {
