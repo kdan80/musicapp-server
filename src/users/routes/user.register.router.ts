@@ -23,7 +23,7 @@ router.post('/', async(req: Request, res: Response, next: NextFunction) => {
         const user = await UserModel.create(candidateUser)
 
         return res.status(201).json(user)
-    } catch(err: any){
+    } catch (err){
         next(err)
     }
 

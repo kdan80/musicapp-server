@@ -12,8 +12,11 @@ export const errorHandler: ErrorRequestHandler = (err, req: Request, res: Respon
     if(err.code === 11000){
         return res.status(400).send('That username is unavailable')
     }
+
+    if(err.name === 'ValidationError'){
+        return res.status(400).send('User validation failed')
+    }
   
-    
     // Otherwise we return a generic error
     return res.status(500).send(err);
   }
