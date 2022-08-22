@@ -10,7 +10,7 @@ router.use(
     permitted_methods(['POST'], config.register.err_405_not_allowed)
 )
 
-router.post('/', async(req: Request, res: Response, next: NextFunction) => {
+router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
     try {
         const { username, email, password } = req.body
 

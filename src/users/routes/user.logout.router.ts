@@ -11,7 +11,7 @@ router.use('/',
     superfluous_logout,
 )
 
-router.post('/', (req: Request, res: Response) => {
+router.post('/', ( req: Request, res: Response, next: NextFunction ) => {
     try {
             req.session.destroy((err) => {
             if (err) return res.send(err)

@@ -6,19 +6,17 @@ export const errorHandler: ErrorRequestHandler = (err, req: Request, res: Respon
         return next(err)
     }
   
-    
-
     // Mongoose code for duplicate key error
     // As username is the only unique field (other than _id) it must be the duplicate error
-    if(err.code === 11000){
+    if (err.code === 11000) {
         return res.status(400).send('That username is unavailable')
     }
 
-    if(err.name === 'ValidationError'){
+    if (err.name === 'ValidationError') {
         return res.status(400).send('User validation failed')
     }
 
-    switch(err.message){
+    switch (err.message) {
 
         case 'INCORRECT_PASSWORD':
             return res.status(401).send('Password was incorrect.')

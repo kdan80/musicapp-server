@@ -7,11 +7,11 @@ export class UserError {
       this.message = message;
     }
 
-    static isNotLoggedIn(){
+    static isNotLoggedIn() {
         return new UserError(401, 'You are not authorized to perform that operation')
     }
 
-    static userAlreadyExists(){
+    static userAlreadyExists() {
         return new UserError(400, 'An account with that username already exists')
     }
   
@@ -35,11 +35,11 @@ export class ValidationError {
       this.messages = messages;
     }
 
-    static isNotLoggedIn(){
+    static isNotLoggedIn() {
         return new ValidationError(401, ['You are not authorized to perform that operation'])
     }
 
-    static userAlreadyExists(){
+    static userAlreadyExists() {
         return new ValidationError(400, ['That username is unavailable'])
     }
 }

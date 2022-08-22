@@ -15,15 +15,15 @@ router.use('/',
 
 router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
-   try {
+    try {
 
-        const {username, password} = req.body
+        const { username, password } = req.body
 
         const user = await UserModel.findOne({username})
-        if(!user) throw new Error('USER_NOT_FOUND')
+        if (!user) throw new Error('USER_NOT_FOUND')
         
         const userIsAuthenticated = await bcrypt.compare(password, user.password)
-        if(!userIsAuthenticated) throw new Error('INCORRECT_PASSWORD')
+        if (!userIsAuthenticated) throw new Error('INCORRECT_PASSWORD')
 
         req.session._id = user._id
         req.session.username = username
@@ -32,9 +32,9 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
         return res.status(200).send(config.login.msg_200_success)
 
-   } catch (err){
+    } catch (err) {
         next(err)
-   }
+    }
 });
 
 export default router

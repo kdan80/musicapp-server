@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { CallbackError } from 'mongoose'
 import bcrypt from 'bcrypt'
 import config from './user.model.config'
 
@@ -101,7 +101,7 @@ baseUserSchema.pre('save', async function(next){
         const salt = await bcrypt.genSalt(10)
         user.password = await bcrypt.hash(user.password, salt)
         return next()
-    } catch(err: any) {
+    } catch (err: any) {
       return next(err)
     }
 })
