@@ -15,8 +15,8 @@ router.post('/', async(req: Request, res: Response, next: NextFunction) => {
     try {
         const { username, email, password } = req.body
 
-        const userAlreadyExists = await UserModel.findOne({username})
-        if(userAlreadyExists) return next(UserError.userAlreadyExists())
+        //const userAlreadyExists = await UserModel.findOne({username})
+        //if(userAlreadyExists) return next(UserError.userAlreadyExists())
 
         const candidateUser = {
             username,
@@ -28,7 +28,8 @@ router.post('/', async(req: Request, res: Response, next: NextFunction) => {
 
         return res.status(201).json(user)
     } catch(err: any){
-        return res.status(404).send(err.message)
+        //return res.status(404).send(err.message)
+        next(err)
     }
 
 })
