@@ -23,4 +23,23 @@ export class UserError {
       return new UserError(500, msg);
     }
 }
-  
+
+export class ValidationError {
+    code: number
+    // Validation might fail for numerous reasons (username too short, invalid password etc)
+    // We keep an array of messages for each error
+    messages: string[] 
+
+    constructor(code: number, messages: string[]) {
+      this.code = code;
+      this.messages = messages;
+    }
+
+    static isNotLoggedIn(){
+        return new ValidationError(401, ['You are not authorized to perform that operation'])
+    }
+
+    static userAlreadyExists(){
+        return new ValidationError(400, ['That username is unavailable'])
+    }
+}

@@ -7,12 +7,13 @@ export const errorHandler: ErrorRequestHandler = (err, req: Request, res: Respon
         return next(err)
     }
   
-    // If we know about the error return the specific code and message
-    if (err instanceof UserError) {
-      return res.status(err.code).json(err.message);
+    // Mongoose code for duplicate key error
+    // As username is the only unique field (other than _id) it must be the duplicate error
+    if(err.code === 11000){
+        return res.status(400).send('That username is unavailable')
     }
   
-    console.error(err.stack)
+    
     // Otherwise we return a generic error
     return res.status(500).send(err);
   }
