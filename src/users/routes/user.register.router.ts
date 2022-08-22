@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express'
 import { permitted_methods } from '../middleware/user.middleware'
 import { UserModel } from '@users'
-import { UserError } from '../error/user.error'
 import config from '../config'
 
 const router = express.Router()
