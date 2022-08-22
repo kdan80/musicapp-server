@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import { UserModel }  from '@users'
 import bcrypt from 'bcrypt'
 import config from '../config'
@@ -13,23 +13,28 @@ router.use('/',
     superfluous_login
 );
 
-router.post('/', async( req: Request, res: Response ) => {
+router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
-    const {email, password} = req.body
+   try {
 
-    const user = await UserModel.findOne({email})
-    if(!user) return res.status(401).send(config.login.err_fail)
-    
-    const userIsAuthenticated = await bcrypt.compare(password, user.password)
-    if(!userIsAuthenticated) return res.status(401).send(config.login.err_fail)
+        const {username, password} = req.body
 
-    req.session._id = user._id
-    req.session.email = email
-    req.session.username = user.username
-    req.session.message = config.login.msg_200_success
-    req.session.isAuthenticated = true
+        const user = await UserModel.findOne({username})
+        if(!user) throw new Error('USER_NOT_FOUND')
+        
+        const userIsAuthenticated = await bcrypt.compare(password, user.password)
+        if(!userIsAuthenticated) throw new Error('INCORRECT_PASSWORD')
 
-    return res.status(200).send(config.login.msg_200_success)
+        req.session._id = user._id
+        req.session.username = username
+        req.session.message = config.login.msg_200_success
+        req.session.isAuthenticated = true
+
+        return res.status(200).send(config.login.msg_200_success)
+
+   } catch (err){
+        next(err)
+   }
 });
 
 export default router
