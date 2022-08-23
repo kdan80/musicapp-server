@@ -34,6 +34,11 @@ export const errorHandler: ErrorRequestHandler = (err, req: Request, res: Respon
 
     switch (err.message) {
 
+        case 'TEST_ERROR':
+            clientResponse.message = 'This is a test error.'
+            clientResponse.status = 999
+            break
+
         case 'UNPERMITTED_METHOD':
             clientResponse.message = 'Permission denied. Illegal operation.'
             clientResponse.status = 405
