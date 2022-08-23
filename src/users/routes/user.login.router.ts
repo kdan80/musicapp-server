@@ -9,7 +9,7 @@ const router = express.Router()
 
 // Login Middleware
 router.use('/', 
-    permitted_methods(['POST'], config.login.err_405_not_allowed),
+    permitted_methods(['POST']),
     superfluous_login
 );
 

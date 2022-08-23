@@ -7,7 +7,7 @@ const router = express.Router()
 
 // Middleware
 router.use(
-    permitted_methods(['POST'], config.register.err_405_not_allowed)
+    permitted_methods(['POST'])
 )
 
 router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
