@@ -15,7 +15,7 @@ export const errorHandler: ErrorRequestHandler = (err, req: Request, res: Respon
     const clientResponse: ClientResponse = {
         status: 500,
         name: 'UserError',
-        message: 'An error occured'
+        message: 'An error occured.'
     }
 
     // Mongoose code for duplicate key error = 11000
@@ -63,10 +63,9 @@ export const errorHandler: ErrorRequestHandler = (err, req: Request, res: Respon
             clientResponse.message = 'Logout error.'
             clientResponse.status = 401
             break
-            
+
         default:
-            break
-            //clientResponse = {...clientResponse, status: 500, message: 'An error occured.'}
+            return res.status(clientResponse.status).json(clientResponse)
     }
 
     return res.status(clientResponse.status).json(clientResponse)
