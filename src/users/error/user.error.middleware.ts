@@ -17,14 +17,19 @@ export const errorHandler: ErrorRequestHandler = (err, req: Request, res: Respon
         name: 'UserError',
         message: 'An error occured'
     }
-    // Mongoose code for duplicate key error
-    // As username is the only unique field (other than _id) it must be the duplicate error
+
+    // Mongoose code for duplicate key error = 11000
+    // As username is the only unique field (other than _id) it must be the casue of the duplicate error
     if (err.code === 11000) {
-        return res.status(400).send('That username is unavailable')
+        clientResponse.status = 400
+        clientResponse.message = 'That user already exists'
+        return res.status(400).json(clientResponse)
     }
 
     if (err.name === 'ValidationError') {
-        return res.status(400).send('User validation failed')
+        clientResponse.status = 400
+        clientResponse.message = err.message
+        return res.status(clientResponse.status).json(clientResponse)
     }
 
     switch (err.message) {
@@ -58,7 +63,6 @@ export const errorHandler: ErrorRequestHandler = (err, req: Request, res: Respon
             break
             //clientResponse = {...clientResponse, status: 500, message: 'An error occured.'}
     }
-    console.log('mw err: ', err.message, err.name)
 
     return res.status(clientResponse.status).json(clientResponse)
   
