@@ -36,16 +36,8 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
         await UploadMiddleware(req, res)
 
-        const info_raw = fs.readFileSync(`${temp_storage}/info.json`, 'utf8')
-        const info = JSON.parse(info_raw)
-
-        const {
-            title, artist, featured_artists, track_listing, genre, release_year
-        } = info
-
-        const candidateAlbum = {
-            title, artist, featured_artists, track_listing, genre, release_year
-        }
+        const info = fs.readFileSync(`${temp_storage}/info.json`, 'utf8')
+        const candidateAlbum = JSON.parse(info)
 
         const album = await AlbumModel.create(candidateAlbum)
 
