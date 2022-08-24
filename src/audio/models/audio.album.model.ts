@@ -2,9 +2,8 @@ import mongoose from 'mongoose'
 
 interface IAlbum {
     title: string,
-    artist: string,
+    artist: string[],
     track_listing: string[],
-    tracks: number,
     duration: number,
     genre: string,
     release_year: number,
@@ -23,11 +22,22 @@ const AlbumSchema = new mongoose.Schema<IAlbum>({
     },
 
     artist: {
-        type: String,
+        type: [String],
         required: [
             true, 
             'Artist is required'
         ]
+    },
+
+    track_listing: {
+        type: [String],
+        required: true
+    },
+
+    duration: {
+        type: Number,
+        required: true,
+        default: 0
     },
 
     genre: {
