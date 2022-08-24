@@ -1,8 +1,8 @@
-import mongoose, { CallbackError } from 'mongoose'
+import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 import config from './user.model.config'
 
-interface IBaseUser {
+interface IUser {
     username: string,
     password: string,
     createdAt: Date,
@@ -12,7 +12,7 @@ interface IBaseUser {
 }
 
 // Define a schema ie the shape a document will take in the db
-const baseUserSchema = new mongoose.Schema<IBaseUser>({
+export const UserSchema = new mongoose.Schema<IUser>({
     
     username: {
         type: String,
@@ -92,7 +92,7 @@ const baseUserSchema = new mongoose.Schema<IBaseUser>({
 })
 
 // Hash the incoming password before we save it
-baseUserSchema.pre('save', async function(next){
+UserSchema.pre('save', async function(next){
 
     const user = this
     if (!user.isModified('password')) return next()
@@ -107,6 +107,6 @@ baseUserSchema.pre('save', async function(next){
 })
 
 // Compile a model from our schema. This will be used to construct documents and read from documents
-const BaseUser = mongoose.model<IBaseUser>('User', baseUserSchema)
+const User = mongoose.model<IUser>('User', UserSchema)
 
-export default BaseUser
+export default User

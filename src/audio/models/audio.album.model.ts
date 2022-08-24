@@ -16,7 +16,6 @@ const AlbumSchema = new mongoose.Schema<IAlbum>({
     
     title: {
         type: String,
-        index: true,
         required: [
             true, 
             'Title is required'
@@ -25,7 +24,6 @@ const AlbumSchema = new mongoose.Schema<IAlbum>({
 
     artist: {
         type: String,
-        index: true,
         required: [
             true, 
             'Artist is required'
@@ -34,7 +32,6 @@ const AlbumSchema = new mongoose.Schema<IAlbum>({
 
     genre: {
         type: String,
-        index: true,
         required: [
             true, 
             'Genre is required'
@@ -43,7 +40,6 @@ const AlbumSchema = new mongoose.Schema<IAlbum>({
 
     release_year: {
         type: Number,
-        index: true,
         required: [
             true, 
             'Release year is required'

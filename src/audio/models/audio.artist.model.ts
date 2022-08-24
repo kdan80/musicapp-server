@@ -12,7 +12,6 @@ const ArtistSchema = new mongoose.Schema<IArtist>({
     
     name: {
         type: String,
-        index: true,
         required: [
             true, 
             'Name is required'

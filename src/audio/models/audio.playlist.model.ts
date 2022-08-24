@@ -1,9 +1,12 @@
 import mongoose from 'mongoose'
+import { UserSchema } from '@users'
+import { SongSchema } from './audio.song.model'
 
 interface IPlaylist {
     name: string,
-    owner: string,
-    songs: string,
+    owner: typeof UserSchema,
+    track_list: [typeof SongSchema],
+    duration: number,
     createdAt: Date,
 }
 
@@ -12,22 +15,33 @@ const PlaylistSchema = new mongoose.Schema<IPlaylist>({
     
     name: {
         type: String,
-        index: true,
         required: [
             true, 
             'Name is required'
         ]
     },
 
+    // Subdocument
     owner: {
-        type: String,
-        index: true,
+        type: UserSchema,
         required: [
-            true, 
+            true,
             'Owner is required'
         ]
     },
 
+    // Subdocument
+    track_list: {
+        type: [SongSchema],
+        required: true,
+        default: []
+    },
+
+    duration: {
+        type: Number,
+        required: true,
+        default: 0
+    },
 
     createdAt: {
         type: Date,
