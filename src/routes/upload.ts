@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express'
 import multer from 'multer'
 import fs from 'fs'
 import util from 'util'
+import { AlbumModel } from '@audio'
 
 const router = express.Router()
 
@@ -38,7 +39,17 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
         const info_raw = fs.readFileSync(`${temp_storage}/info.json`, 'utf8')
         const info = JSON.parse(info_raw)
 
-        return res.status(200).json(info)
+        const {
+            title, artist, featured_artists, track_listing, genre, release_year
+        } = info
+
+        const candidateAlbum = {
+            title, artist, featured_artists, track_listing, genre, release_year
+        }
+
+        const album = await AlbumModel.create(candidateAlbum)
+
+        return res.status(200).send(album)
     } catch (err) {
         next(err)
     }

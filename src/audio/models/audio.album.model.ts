@@ -2,7 +2,8 @@ import mongoose from 'mongoose'
 
 interface IAlbum {
     title: string,
-    artist: string[],
+    artist: string,
+    featured_artists?: string[],
     track_listing: string[],
     duration: number,
     genre: string,
@@ -22,11 +23,16 @@ const AlbumSchema = new mongoose.Schema<IAlbum>({
     },
 
     artist: {
-        type: [String],
+        type: String,
         required: [
             true, 
             'Artist is required'
         ]
+    },
+
+    featured_artists: {
+        type: [String],
+        required: false
     },
 
     track_listing: {
@@ -63,11 +69,10 @@ const AlbumSchema = new mongoose.Schema<IAlbum>({
 })
 
 // Hash the incoming password before we save it
-// AlbumSchema.pre('save', async function(next){
-
-// })
+AlbumSchema.pre('save', function(next){
+    this.duration = this.track_listing.length * 1000
+    next()
+})
 
 // Compile a model from our schema. This will be used to construct documents and read from documents
-const Album = mongoose.model<IAlbum>('Album', AlbumSchema)
-
-export default Album
+export const AlbumModel = mongoose.model<IAlbum>('Album', AlbumSchema)
