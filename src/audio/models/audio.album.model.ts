@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
+import { SongSchema } from './audio.song.model'
 
 interface IAlbum {
     title: string,
     artist: string,
     featured_artists?: string[],
-    track_listing: string[],
+    track_listing?: typeof SongSchema[],
     duration: number,
     genre: string,
     release_year: number,
@@ -36,8 +37,7 @@ const AlbumSchema = new mongoose.Schema<IAlbum>({
     },
 
     track_listing: {
-        type: [String],
-        required: true
+        type: [SongSchema]
     },
 
     duration: {
@@ -68,11 +68,14 @@ const AlbumSchema = new mongoose.Schema<IAlbum>({
     }
 })
 
+// Unique together artist/album title
+AlbumSchema.index({ title: 1, artist: 1}, { unique: true })
+
 // Hash the incoming password before we save it
-AlbumSchema.pre('save', function(next){
-    this.duration = this.track_listing.length * 1000
-    next()
-})
+// AlbumSchema.pre('save', function(next){
+//     this.duration = this.track_listing.length * 1000
+//     next()
+// })
 
 // Compile a model from our schema. This will be used to construct documents and read from documents
 export const AlbumModel = mongoose.model<IAlbum>('Album', AlbumSchema)

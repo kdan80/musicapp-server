@@ -20,6 +20,7 @@ interface Config {
 const MONGO_OPTIONS = {
     useUnifiedTopology: true,
     useNewUrlParser: true,
+    useCreateIndex: true,
     socketTimeoutMS: 30000,
     keepAlive: true,
     poolSize: 50,

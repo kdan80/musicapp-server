@@ -10,6 +10,7 @@ const router = express.Router()
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
 
+        // Create an upload directory based on the name of the uploaded album title (req.body.title)
         const upload_dir = `${process.env.MEDIA}/${req.body.title}`
         const upload_dir_exists = fs.existsSync(upload_dir)
 
@@ -71,8 +72,16 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
                         release_year: year,
                         path: file.path
                     }
+                    
+                    const albumExists = await AlbumModel.findOne({ artist, title: album})
+                    if (!albumExists) {
+                        console.log('creating album...')
+                        await AlbumModel.create({
+                            title: album, artist, genre, release_year: year
+                        })
+                        console.log('album created')
+                    }
 
-    
                     const song = await SongModel.create(candidateSong)
                 },
                 onError: (err) => {

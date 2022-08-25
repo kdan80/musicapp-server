@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { AlbumModel } from './audio.album.model'
 
 interface ISong {
     title: string,
@@ -86,9 +87,21 @@ export const SongSchema = new mongoose.Schema<ISong>({
     }
 })
 
-// Hash the incoming password before we save it
+// 
 // SongSchema.pre('save', async function(next){
 
+//     const { artist, album, genre, release_year } = this
+
+//     const albumExists = await AlbumModel.findOne({ artist: artist, title: album })
+//     console.log('Album exists: ', albumExists)
+//     if (!albumExists) {
+//         const candidateAlbum = { artist, title: album, genre, release_year }
+//         console.log('creating album...')
+//         await AlbumModel.create(candidateAlbum)
+//         console.log(`${album} created`)
+//         return next()
+//     }
+//     return next()
 // })
 
 // Compile a model from our schema. This will be used to construct documents and read from documents
