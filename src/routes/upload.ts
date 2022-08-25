@@ -11,8 +11,15 @@ const temp_storage = `${process.env.MEDIA}/temp`;
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        
-        cb(null, temp_storage);
+
+        // The upload dir will be named after the album that is uploaded (from req.body.title)
+        const upload_dir = `${process.env.MEDIA}/${req.body.title}`
+    
+        fs.mkdir(upload_dir, () => {
+            console.log('path: ', `${process.env.MEDIA}/${req.body.title}`)
+        })
+
+        cb(null, upload_dir);
     },
     filename: (req, file, cb) => {
         
@@ -42,6 +49,10 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
         //const album = await AlbumModel.create(candidateAlbum)
 
+        fs.mkdir(`${process.env.MEDIA}/${req.body.title}`, () => {
+            console.log('path: ', `${process.env.MEDIA}/${req.body.title}`)
+        })
+
         const files = req.files as Express.Multer.File[] 
 
         files.forEach(file => {
@@ -65,6 +76,7 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
                         release_year: year,
                         path: file.path
                     }
+
     
                     const song = await SongModel.create(candidateSong)
                 },
