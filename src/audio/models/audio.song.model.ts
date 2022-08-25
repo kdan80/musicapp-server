@@ -44,7 +44,8 @@ export const SongSchema = new mongoose.Schema<ISong>({
         required: [
             true, 
             'Duration is required'
-        ]
+        ],
+        default: 100
     },
 
     track_number: {

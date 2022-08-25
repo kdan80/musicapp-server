@@ -2,7 +2,8 @@ import express, { NextFunction, Request, Response } from 'express'
 import multer from 'multer'
 import fs from 'fs'
 import util from 'util'
-import { AlbumModel } from '@audio'
+import { AlbumModel, SongModel } from '@audio'
+import jsmediatags from 'jsmediatags'
 
 const router = express.Router()
 
@@ -26,22 +27,56 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({storage: storage}).array('album', 30)
+const upload = multer({storage: storage})
 
-const UploadMiddleware = util.promisify(upload)
+//const UploadMiddleware = util.promisify(upload)
 
-router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
+router.post('/', upload.array('album', 30) , async( req: Request, res: Response, next: NextFunction ) => {
 
     try {
 
-        await UploadMiddleware(req, res)
+        //await UploadMiddleware(req, res)
 
-        const info = fs.readFileSync(`${temp_storage}/info.json`, 'utf8')
-        const candidateAlbum = JSON.parse(info)
+        //const info = fs.readFileSync(`${temp_storage}/info.json`, 'utf8')
+        //const candidateAlbum = JSON.parse(info)
 
-        const album = await AlbumModel.create(candidateAlbum)
+        //const album = await AlbumModel.create(candidateAlbum)
 
-        return res.status(200).send(album)
+        
+        const file = req.files[0]
+        
+        const mp3 = fs.readFileSync(file.path)
+
+        //const file = req.files[0].path
+        
+
+        jsmediatags.read(mp3, {
+            onSuccess: async(tag) => {
+                console.log('tag: ', tag)
+
+                const {
+                    title, artist, album, year, track, genre
+                } = tag.tags
+
+                const candidateSong = {
+                    title, 
+                    artist, 
+                    album, 
+                    genre,
+                    track_number: track,
+                    release_year: year,
+                    path: file.path
+                }
+
+                const song = await SongModel.create(candidateSong)
+                return res.status(200).json(song)
+            },
+            onError: (err) => {
+                throw new Error('Tag Error')
+            }
+        })
+        
+        
     } catch (err) {
         next(err)
     }
