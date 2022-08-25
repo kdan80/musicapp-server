@@ -29,53 +29,53 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage})
 
-//const UploadMiddleware = util.promisify(upload)
+const UploadMiddleware = util.promisify(upload.array('album', 30))
 
-router.post('/', upload.array('album', 30) , async( req: Request, res: Response, next: NextFunction ) => {
+router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
     try {
 
-        //await UploadMiddleware(req, res)
+        await UploadMiddleware(req, res)
 
         //const info = fs.readFileSync(`${temp_storage}/info.json`, 'utf8')
         //const candidateAlbum = JSON.parse(info)
 
         //const album = await AlbumModel.create(candidateAlbum)
 
-        
-        const file = req.files[0]
-        
-        const mp3 = fs.readFileSync(file.path)
+        const files = req.files as Express.Multer.File[] 
 
-        //const file = req.files[0].path
-        
+        files.forEach(file => {
 
-        jsmediatags.read(mp3, {
-            onSuccess: async(tag) => {
-                console.log('tag: ', tag)
+            const mp3Binary = fs.readFileSync(file.path)
 
-                const {
-                    title, artist, album, year, track, genre
-                } = tag.tags
-
-                const candidateSong = {
-                    title, 
-                    artist, 
-                    album, 
-                    genre,
-                    track_number: track,
-                    release_year: year,
-                    path: file.path
+            jsmediatags.read(mp3Binary, {
+                onSuccess: async(tag) => {
+                    console.log('tag: ', tag)
+    
+                    const {
+                        title, artist, album, year, track, genre
+                    } = tag.tags
+    
+                    const candidateSong = {
+                        title, 
+                        artist, 
+                        album, 
+                        genre,
+                        track_number: track,
+                        release_year: year,
+                        path: file.path
+                    }
+    
+                    const song = await SongModel.create(candidateSong)
+                },
+                onError: (err) => {
+                    throw new Error('Tag Error')
                 }
+            })
 
-                const song = await SongModel.create(candidateSong)
-                return res.status(200).json(song)
-            },
-            onError: (err) => {
-                throw new Error('Tag Error')
-            }
         })
-        
+
+        res.status(200).send('success')       
         
     } catch (err) {
         next(err)
