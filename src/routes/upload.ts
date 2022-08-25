@@ -7,19 +7,18 @@ import jsmediatags from 'jsmediatags'
 
 const router = express.Router()
 
-const temp_storage = `${process.env.MEDIA}/temp`;
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
 
-        // The upload dir will be named after the album that is uploaded (from req.body.title)
         const upload_dir = `${process.env.MEDIA}/${req.body.title}`
-    
-        fs.mkdir(upload_dir, () => {
-            console.log('path: ', `${process.env.MEDIA}/${req.body.title}`)
-        })
+        const upload_dir_exists = fs.existsSync(upload_dir)
+
+        if (!upload_dir_exists) {
+            fs.mkdirSync(upload_dir)
+        }
 
         cb(null, upload_dir);
+
     },
     filename: (req, file, cb) => {
         
@@ -28,9 +27,9 @@ const storage = multer.diskStorage({
         cb(null, file.originalname);
         
         // If the user stops the upload we need to remove the partially uploaded file
-        req.on("aborted", () => {
-            fs.unlink(`${temp_storage}/${file.originalname}`, () => console.log("file removed"));  
-        });
+        // req.on("aborted", () => {
+        //     fs.unlink(`${temp_storage}/${file.originalname}`, () => console.log("file removed"));  
+        // });
     }
 });
 
@@ -49,9 +48,6 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
         //const album = await AlbumModel.create(candidateAlbum)
 
-        fs.mkdir(`${process.env.MEDIA}/${req.body.title}`, () => {
-            console.log('path: ', `${process.env.MEDIA}/${req.body.title}`)
-        })
 
         const files = req.files as Express.Multer.File[] 
 
@@ -61,7 +57,6 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
             jsmediatags.read(mp3Binary, {
                 onSuccess: async(tag) => {
-                    console.log('tag: ', tag)
     
                     const {
                         title, artist, album, year, track, genre
