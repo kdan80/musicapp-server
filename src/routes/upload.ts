@@ -7,6 +7,19 @@ import jsmediatags from 'jsmediatags'
 
 const router = express.Router()
 
+const getID3Tags = (mp3: any) => {
+    return new Promise((resolve, reject) => {
+        jsmediatags.read(mp3, {
+            onSuccess: (tag) => {
+                resolve(tag.tags)
+            },
+            onError: (err) => {
+                reject(err)
+            }
+        })
+    })
+}
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
 
@@ -44,54 +57,31 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
         await UploadMiddleware(req, res)
 
-        //const info = fs.readFileSync(`${temp_storage}/info.json`, 'utf8')
-        //const candidateAlbum = JSON.parse(info)
-
-        //const album = await AlbumModel.create(candidateAlbum)
-
-
         const files = req.files as Express.Multer.File[] 
 
-        files.forEach(file => {
+        for(let i = 0; i < files.length; i++){
+            const mp3Binary = fs.readFileSync(files[i].path)
 
-            const mp3Binary = fs.readFileSync(file.path)
+            const {
+                title, artist, album, year, track, genre
+            } = await getID3Tags(mp3Binary)
 
-            jsmediatags.read(mp3Binary, {
-                onSuccess: async(tag) => {
-    
-                    const {
-                        title, artist, album, year, track, genre
-                    } = tag.tags
-    
-                    const candidateSong = {
-                        title, 
-                        artist, 
-                        album, 
-                        genre,
-                        track_number: track,
-                        release_year: year,
-                        path: file.path
-                    }
-                    
-                    const albumExists = await AlbumModel.findOne({ artist, title: album})
-                    if (!albumExists) {
-                        console.log('creating album...')
-                        await AlbumModel.create({
-                            title: album, artist, genre, release_year: year
-                        })
-                        console.log('album created')
-                    }
+            const candidateSong = {
+                title, artist, album, genre, track_number: track, release_year: year
+            }
 
-                    const song = await SongModel.create(candidateSong)
-                },
-                onError: (err) => {
-                    throw new Error('Tag Error')
-                }
+            const albumExists = await AlbumModel.exists({ artist, title: candidateSong.album})
+            
+            if (albumExists) continue
+
+            await AlbumModel.create({
+                title: album, artist, genre, release_year: year
             })
 
-        })
+            //const song = await SongModel.create(candidateSong)
+        }
 
-        res.status(200).send('success')       
+        res.status(200).json('success')       
         
     } catch (err) {
         next(err)
