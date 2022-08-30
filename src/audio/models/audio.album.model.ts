@@ -1,11 +1,13 @@
-import mongoose from 'mongoose'
-import { SongSchema } from './audio.song.model'
+import mongoose, { Schema, Document, PopulatedDoc, ObjectId } from 'mongoose'
+import { ISong } from './audio.song.model'
 
-interface IAlbum {
+export interface IAlbum {
+    //_id: typeof mongoose.Schema.Types.ObjectId,
     title: string,
     artist: string,
     featured_artists?: string[],
-    track_listing?: typeof mongoose.Types.ObjectId[],
+    //track_listing?: [typeof mongoose.Types.ObjectId],
+    track_listing?: PopulatedDoc<Document<ObjectId> & ISong>[],
     duration: number,
     genre: string,
     release_year: number,
@@ -13,8 +15,14 @@ interface IAlbum {
 }
 
 // Define a schema ie the shape a document will take in the db
-export const AlbumSchema = new mongoose.Schema<IAlbum>({
-    
+export const AlbumSchema = new Schema<IAlbum>({
+    // _id: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     index: true,
+    //     auto: true,
+    //     required: true
+    // },
+
     title: {
         type: String,
         required: [
@@ -36,10 +44,10 @@ export const AlbumSchema = new mongoose.Schema<IAlbum>({
         required: false
     },
 
-    track_listing: {
-        type: [mongoose.Types.ObjectId],
+    track_listing: [{
+        type: 'ObjectId',
         ref: 'Song'
-    },
+    }],
 
     duration: {
         type: Number,

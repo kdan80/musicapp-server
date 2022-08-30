@@ -63,24 +63,30 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
             const mp3Binary = fs.readFileSync(files[i].path)
 
             const {
-                title, artist, album, year, track, genre
+                title, artist, album: albumTag, year, track, genre
             } = await getID3Tags(mp3Binary)
 
 
-            const albumExists = await AlbumModel.exists({ artist, title: album})
+            let album = await AlbumModel.findOne({ artist, title: albumTag})
             
-            if (!albumExists) {
-                await AlbumModel.create({
-                    title: album, artist, genre, release_year: year
+            if (!album) {
+                album = await AlbumModel.create({
+                    title: albumTag, artist, genre, release_year: year
                 })
+                console.log('Album created')
             }
 
             const candidateSong = {
-                title, artist, album, genre, track_number: track, release_year: year
+                title, artist, genre, track_number: track, release_year: year 
             }
 
-            //const song = await SongModel.create(candidateSong)
+            const song = await SongModel.create(candidateSong)
 
+            song.album = album._id
+            song.save()
+
+            album.track_listing = [...album.track_listing, song._id]
+            album.save()
 
         }
 
