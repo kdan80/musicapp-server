@@ -1,10 +1,10 @@
-import mongoose from 'mongoose'
-import { AlbumModel } from './audio.album.model'
+import mongoose, { Schema } from 'mongoose'
+import { AlbumSchema } from './audio.album.model'
 
 interface ISong {
     title: string,
     artist: string,
-    album: string,
+    album: typeof mongoose.Types.ObjectId,
     duration: number,
     track_number: number,
     genre: string,
@@ -32,12 +32,9 @@ export const SongSchema = new mongoose.Schema<ISong>({
         ]
     },
 
-    album: {
-        type: String,
-        required: [
-            true, 
-            'Album is required'
-        ]
+    album: { 
+        type: mongoose.Types.ObjectId, 
+        ref: 'Album'
     },
 
     duration: {

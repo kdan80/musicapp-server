@@ -5,7 +5,7 @@ interface IAlbum {
     title: string,
     artist: string,
     featured_artists?: string[],
-    track_listing?: typeof SongSchema[],
+    track_listing?: typeof mongoose.Types.ObjectId[],
     duration: number,
     genre: string,
     release_year: number,
@@ -13,7 +13,7 @@ interface IAlbum {
 }
 
 // Define a schema ie the shape a document will take in the db
-const AlbumSchema = new mongoose.Schema<IAlbum>({
+export const AlbumSchema = new mongoose.Schema<IAlbum>({
     
     title: {
         type: String,
@@ -37,7 +37,8 @@ const AlbumSchema = new mongoose.Schema<IAlbum>({
     },
 
     track_listing: {
-        type: [SongSchema]
+        type: [mongoose.Types.ObjectId],
+        ref: 'Song'
     },
 
     duration: {

@@ -66,19 +66,22 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
                 title, artist, album, year, track, genre
             } = await getID3Tags(mp3Binary)
 
+
+            const albumExists = await AlbumModel.exists({ artist, title: album})
+            
+            if (!albumExists) {
+                await AlbumModel.create({
+                    title: album, artist, genre, release_year: year
+                })
+            }
+
             const candidateSong = {
                 title, artist, album, genre, track_number: track, release_year: year
             }
 
-            const albumExists = await AlbumModel.exists({ artist, title: candidateSong.album})
-            
-            if (albumExists) continue
-
-            await AlbumModel.create({
-                title: album, artist, genre, release_year: year
-            })
-
             //const song = await SongModel.create(candidateSong)
+
+
         }
 
         res.status(200).json('success')       
