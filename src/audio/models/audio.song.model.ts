@@ -2,7 +2,6 @@ import mongoose, { Schema, Document, PopulatedDoc, ObjectId } from 'mongoose'
 import { AlbumSchema, IAlbum } from './audio.album.model'
 
 export interface ISong {
-    //_id: typeof mongoose.Schema.Types.ObjectId,
     title: string,
     artist: string,
     album: PopulatedDoc<Document<ObjectId> & IAlbum>,
@@ -49,8 +48,7 @@ export const SongSchema = new mongoose.Schema<ISong>({
         required: [
             true, 
             'Duration is required'
-        ],
-        default: 100
+        ]
     },
 
     track_number: {

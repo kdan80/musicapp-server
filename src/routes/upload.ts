@@ -13,6 +13,7 @@ interface Tags {
     album: string | undefined,
     disc_number: string,
     track_number: string | undefined,
+    duration: number,
     genre: string | undefined,
     release_year: string | undefined
 }
@@ -21,6 +22,7 @@ const getID3Tags = (mp3: any) => {
     return new Promise<Tags>((resolve, reject) => {
         jsmediatags.read(mp3, {
             onSuccess: (tag) => {
+                console.log(tag)
 
                 const tags = {
                     title: tag.tags.title, 
@@ -28,6 +30,7 @@ const getID3Tags = (mp3: any) => {
                     album: tag.tags.album,
                     disc_number: tag.tags.TPOS.data,
                     track_number: tag.tags.track,
+                    duration: parseInt(tag.tags.TLEN.data),
                     genre: tag.tags.genre,
                     release_year: tag.tags.year,
                 }
@@ -85,12 +88,14 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
         for(let i = 0; i < files.length; i++){
             const mp3Bytes = fs.readFileSync(files[i].path)
 
+            // Album is a string here but will be replaced with an ObjectId reference later
             const {
-                title, artist, album, disc_number, track_number, genre, release_year
+                title, artist, album, disc_number, track_number, duration, genre, release_year
             } = await getID3Tags(mp3Bytes)
 
             const song_tags = {
-                title, artist, album, disc_number, track_number, genre, release_year
+                title, artist, album, disc_number, track_number, duration, genre, release_year,
+                path: files[i].path
             }
 
             songs.push(song_tags)
@@ -108,7 +113,7 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
             console.log(`${songs[0].album} was created`)
         }
 
-        // Loop through the metadata and create a song, replace the album string with an ObjectId reference
+        // Loop through the metadata and create a song model, replace the album string with an ObjectId reference
         for await (const song of songs) {
             SongModel.create({
                 ...song,
