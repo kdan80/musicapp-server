@@ -7,11 +7,32 @@ import jsmediatags from 'jsmediatags'
 
 const router = express.Router()
 
+interface Tags {
+    title: string | undefined,
+    artist: string | undefined,
+    album: string | undefined,
+    disc_number: string,
+    track_number: string | undefined,
+    genre: string | undefined,
+    release_year: string | undefined
+}
+
 const getID3Tags = (mp3: any) => {
-    return new Promise((resolve, reject) => {
+    return new Promise<Tags>((resolve, reject) => {
         jsmediatags.read(mp3, {
             onSuccess: (tag) => {
-                resolve(tag.tags)
+
+                const tags = {
+                    title: tag.tags.title, 
+                    artist: tag.tags.artist,
+                    album: tag.tags.album,
+                    disc_number: tag.tags.TPOS.data,
+                    track_number: tag.tags.track,
+                    genre: tag.tags.genre,
+                    release_year: tag.tags.year,
+                }
+
+                resolve(tags)
             },
             onError: (err) => {
                 reject(err)
@@ -55,42 +76,47 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
     try {
 
+        // Grab the array of uploaded mp3 files
         await UploadMiddleware(req, res)
-
         const files = req.files as Express.Multer.File[] 
 
+        // Loop through each of the uploaded mp3's and extract the metadata and save to an array
+        const songs = []
         for(let i = 0; i < files.length; i++){
-            const mp3Binary = fs.readFileSync(files[i].path)
+            const mp3Bytes = fs.readFileSync(files[i].path)
 
             const {
-                title, artist, album: albumTag, year, track, genre
-            } = await getID3Tags(mp3Binary)
+                title, artist, album, disc_number, track_number, genre, release_year
+            } = await getID3Tags(mp3Bytes)
 
-
-            let album = await AlbumModel.findOne({ artist, title: albumTag})
-            
-            if (!album) {
-                album = await AlbumModel.create({
-                    title: albumTag, artist, genre, release_year: year
-                })
-                console.log('Album created')
+            const song_tags = {
+                title, artist, album, disc_number, track_number, genre, release_year
             }
 
-            const candidateSong = {
-                title, artist, genre, track_number: track, release_year: year 
-            }
-
-            const song = await SongModel.create(candidateSong)
-
-            song.album = album._id
-            song.save()
-
-            album.track_listing = [...album.track_listing, song._id]
-            album.save()
-
+            songs.push(song_tags)
         }
 
-        res.status(200).json('success')       
+        // Create the album if it does not already exist
+        let album = await AlbumModel.findOne({ artist: songs[0].artist, title: songs[0].album})
+        if (!album) {
+            album = await AlbumModel.create({
+                title: songs[0].album, 
+                artist: songs[0].artist, 
+                genre: songs[0].genre, 
+                release_year: songs[0].release_year
+            })
+            console.log(`${songs[0].album} was created`)
+        }
+
+        // Loop through the metadata and create a song, replace the album string with an ObjectId reference
+        for await (const song of songs) {
+            SongModel.create({
+                ...song,
+                album: album
+            })
+        }
+
+        res.status(200).json(songs)       
         
     } catch (err) {
         next(err)

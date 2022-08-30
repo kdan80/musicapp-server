@@ -6,6 +6,7 @@ export interface ISong {
     title: string,
     artist: string,
     album: PopulatedDoc<Document<ObjectId> & IAlbum>,
+    disc_number: number,
     duration: number,
     track_number: number,
     genre: string,
@@ -16,12 +17,6 @@ export interface ISong {
 
 // Define a schema ie the shape a document will take in the db
 export const SongSchema = new mongoose.Schema<ISong>({
-    // _id: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     index: true,
-    //     auto: true,
-    //     required: true
-    // },
 
     title: {
         type: String,
@@ -42,6 +37,11 @@ export const SongSchema = new mongoose.Schema<ISong>({
     album: { 
         type: 'ObjectId', 
         ref: 'Album'
+    },
+
+    disc_number: {
+        type: Number,
+        default: 1
     },
 
     duration: {
