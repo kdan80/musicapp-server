@@ -1,17 +1,27 @@
 import mongoose, { Schema, Document, PopulatedDoc, ObjectId } from 'mongoose'
 import { SongSchema} from './audio.song.model'
 
+type Track = {
+    number: number,
+    disc_number: number,
+    title: string,
+    path: string,
+    duration: number,
+    genres: [string]
+}
+
 export interface IAlbum {
-    //_id: typeof mongoose.Schema.Types.ObjectId,
     title: string,
     artist: string,
-    featured_artists?: string[],
-    //track_listing?: [typeof mongoose.Types.ObjectId],
-    //track_listing?: PopulatedDoc<Document<ObjectId> & ISong>[],
-    track_listing: [typeof SongSchema],
+    featured_artists: [string],
+    track_list: [Track],
     duration: number,
-    genre: string,
+    genres: [string],
     release_year: number,
+    comment: string,
+    number_of_discs: number,
+    album_art: string,
+    path: string,
     createdAt: Date,
 }
 
@@ -40,8 +50,8 @@ export const AlbumSchema = new Schema<IAlbum>({
     }],
 
     // Track_listing is an array of subdocuments
-    track_listing: [{
-        type: SongSchema,
+    track_list: [{
+        type: Object,
         default: []
     }],
 
@@ -51,20 +61,41 @@ export const AlbumSchema = new Schema<IAlbum>({
         default: 0
     },
 
-    genre: {
-        type: String,
-        required: [
-            true, 
-            'Genre is required'
-        ]
-    },
-
     release_year: {
         type: Number,
         required: [
             true, 
             'Release year is required'
         ]
+    },
+
+    comment: {
+        type: String,
+        required: true
+    },
+
+    genres: {
+        type: [String],
+        required: [
+            true, 
+            'Genre is required'
+        ]
+    },
+
+    number_of_discs: {
+        type: Number,
+        required: true
+    },
+
+    album_art: {
+        type: String,
+        required: true,
+        default: 'album_art.jpg'
+    },
+
+    path: {
+        type: String,
+        required: true
     },
 
     createdAt: {

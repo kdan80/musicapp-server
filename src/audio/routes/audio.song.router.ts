@@ -12,18 +12,8 @@ const router = express.Router()
 router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
     try {
-    
-        const { 
-            title, artist, album, duration, track_number, genre, release_year, path
-        } = req.body
-
-        const candidateSong = {
-            title, artist, album, duration, track_number, genre, release_year, path
-        }
-
-        const Song = await SongModel.create(candidateSong)
-        
-        return res.status(200).send(`${title} successfully created`)
+         
+        return res.status(200).send(`Song route redirect`)
 
     } catch (err) {
         next(err)
