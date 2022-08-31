@@ -1,14 +1,16 @@
+import { number } from 'joi'
 import mongoose, { Schema, Document, PopulatedDoc, ObjectId } from 'mongoose'
 import { AlbumSchema, IAlbum } from './audio.album.model'
 
 export interface ISong {
     title: string,
     artist: string,
+    featured_artists: [string],
     album: PopulatedDoc<Document<ObjectId> & IAlbum>,
+    track_number: number,
     disc_number: number,
     duration: number,
-    track_number: number,
-    genre: string,
+    genres: [string],
     release_year: number,
     path: string,
     createdAt: Date,
@@ -31,6 +33,11 @@ export const SongSchema = new mongoose.Schema<ISong>({
             true, 
             'Artist is required'
         ]
+    },
+
+    featured_artists: {
+        type: [String],
+        required: true
     },
 
     album: { 
@@ -59,8 +66,8 @@ export const SongSchema = new mongoose.Schema<ISong>({
         ]
     },
 
-    genre: {
-        type: String,
+    genres: {
+        type: [String],
         required: [
             true, 
             'Genre is required'
@@ -85,7 +92,7 @@ export const SongSchema = new mongoose.Schema<ISong>({
     }
 })
 
-// 
+SongSchema.index({ title: 1, artist: 1}, { unique: true })
 // SongSchema.pre('save', async function(next){
 
 //     const { artist, album, genre, release_year } = this
