@@ -2,7 +2,6 @@ import express, { NextFunction, Request, Response } from 'express';
 import fs from 'fs';
 import { pipeline } from 'stream';
 import { SongModel } from '../models/audio.song.model'
-import path from 'path';
 
 const router = express.Router();
 
@@ -12,25 +11,26 @@ router.get('/:nanoid', async( req: Request, res: Response, next: NextFunction ) 
             const nanoid = req.params.nanoid;
 
             const song = await SongModel.findOne({ nano_id: nanoid })
+            if (!song) throw new Error('Song not found')
 
             const range: any = req.headers.range;
             if (!range) {
-                throw new Error("Requires Range header");
+                throw new Error('Requires Range header');
             }
 
             const fileSize = fs.statSync(song.path).size;
 
             const CHUNK_SIZE = 10 ** 6; // 1MB
-            const start = Number(range.replace(/\D/g, ""));
+            const start = Number(range.replace(/\D/g, ''));
             const end = Math.min(start + CHUNK_SIZE, fileSize - 1);
 
             // Create headers
             const contentLength = end - start + 1;
             const headers = {
-                "Content-Range": `bytes ${start}-${end}/${fileSize}`,
-                "Accept-Ranges": "bytes",
-                "Content-Length": contentLength,
-                "Content-Type": "audio/mpeg",
+                'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+                'Accept-Ranges': 'bytes',
+                'Content-Length': contentLength,
+                'Content-Type': 'audio/mpeg',
             };
 
             // HTTP Status 206 for Partial Content
@@ -47,8 +47,9 @@ router.get('/:nanoid', async( req: Request, res: Response, next: NextFunction ) 
                     console.log('Pipeline closed...');
                 }
             )
-    } catch(error: any) {
-        next(error);
+
+    } catch (err) {
+        next(err);
     }
 });
 
