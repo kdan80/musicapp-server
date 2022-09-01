@@ -4,33 +4,44 @@ import fs from 'fs'
 import util from 'util'
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
+    destination: async(req, file, cb) => {
 
-        // Create an upload directory based on the name of the uploaded album title (req.body.title)
+        // Create an upload directory based on the name of the uploaded album title and artist
         const upload_dir = `${process.env.MEDIA}/${req.body.artist}/${req.body.title}`
-        const upload_dir_exists = fs.existsSync(upload_dir)
-        if (!upload_dir_exists) {
-            fs.mkdirSync(upload_dir, { recursive: true })
-        }
 
-        cb(null, upload_dir);
+        try {
+
+            // Check if the upload directory exists            
+            await fs.promises.access(upload_dir)
+    
+            cb(null, upload_dir);
+
+        } catch (err: any) {
+            
+            // If it does not exist create the upload_dir
+            if (err.code === 'ENOENT') {
+                await fs.promises.mkdir(upload_dir, { recursive: true })
+                console.log('upload_dir created')
+                return cb(null, upload_dir);
+            }
+
+            console.log('upload error')
+        }
 
     },
     filename: (req, file, cb) => {
+
         
-        // Remove the file extension from the file name (it will be transcoded and a new file extension added later)
-        //originalname = path.parse(file.originalname).name;
         cb(null, file.originalname);
         
         // If the user stops the upload we need to remove the partially uploaded file
-        // req.on("aborted", () => {
-        //     fs.unlink(`${temp_storage}/${file.originalname}`, () => console.log("file removed"));  
+        // req.on('aborted', () => {
+        //     fs.unlinkSync(`${file.path}`);  
         // });
     }
 });
 
 const upload = multer({storage: storage})
-
 const UploadMiddleware = util.promisify(upload.array('album', 30))
 
 const upload_album = async( req: Request, res: Response, next: NextFunction ) => {
@@ -47,10 +58,10 @@ const upload_album = async( req: Request, res: Response, next: NextFunction ) =>
         req.body.info = info
         req.body.path = files[0].destination
 
-        // Redirect to the audio module to create album model
         next()
 
     } catch (err) {
+        console.log('###')
         next(err)
     }
 }

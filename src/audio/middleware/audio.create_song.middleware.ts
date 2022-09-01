@@ -21,7 +21,7 @@ const create_song = async( req: Request, res: Response, next: NextFunction ) => 
                 })
             }
 
-            console.log(`${track.title}: `, song)
+            //console.log(`${track.title}: `, song)
         }
 
         next()

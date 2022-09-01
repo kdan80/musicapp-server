@@ -1,0 +1,1 @@
+export { default as permitted_methods }         from './core.permitted_methods.middleware'
