@@ -1,20 +1,24 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import fs from 'fs';
 import { pipeline } from 'stream';
+import { SongModel } from '../models/audio.song.model'
 import path from 'path';
 
 const router = express.Router();
 
-router.post('/:song', ( req: Request, res: Response, next: NextFunction ) => {
+router.get('/:nanoid', async( req: Request, res: Response, next: NextFunction ) => {
+    
     try {
-            const song = req.params.song;
+            const nanoid = req.params.nanoid;
+
+            const song = await SongModel.findOne({ nano_id: nanoid })
+
             const range: any = req.headers.range;
             if (!range) {
-                res.status(400).send("Requires Range header");
+                throw new Error("Requires Range header");
             }
 
-            console.log(`${process.env.MEDIA}/${song}.mp3`)
-            const fileSize = fs.statSync(`${process.env.MEDIA}/${song}.mp3`).size;
+            const fileSize = fs.statSync(song.path).size;
 
             const CHUNK_SIZE = 10 ** 6; // 1MB
             const start = Number(range.replace(/\D/g, ""));
@@ -32,19 +36,19 @@ router.post('/:song', ( req: Request, res: Response, next: NextFunction ) => {
             // HTTP Status 206 for Partial Content
             res.writeHead(206, headers);
 
-            const readStream = fs.createReadStream(`${process.env.MEDIA}/${song}.mp3`, {start, end});
+            const readStream = fs.createReadStream(song.path, {start, end});
 
             // Use pipeline() not readStream.pipe(res) as the latter can lead to memory leaks
             pipeline(
                 readStream, 
                 res, 
                 (err) => {
-                    if(err) return console.log(err);
+                    if (err) throw new Error('Pipeline error');
                     console.log('Pipeline closed...');
                 }
             )
-    } catch(err) {
-        next(err);
+    } catch(error: any) {
+        next(error);
     }
 });
 

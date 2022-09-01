@@ -5,7 +5,6 @@ import cors from 'cors'
 import { playlist, createSong, error } from '@routes'
 import { UserRouter } from '@users'
 import { AudioRouter } from '@audio'
-import { StreamRouter } from '@stream'
 import config from '@config'
 import start from './src/db/connect'
 
@@ -42,7 +41,5 @@ app.use('/audio', AudioRouter)
 app.use('/user', UserRouter)
 app.use('/error', error)
 app.use('/playlist', playlist)
-app.use('/stream', StreamRouter)
-
 
 export default app

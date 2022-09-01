@@ -1,8 +1,9 @@
-import { number } from 'joi'
 import mongoose, { Schema, Document, PopulatedDoc, ObjectId } from 'mongoose'
-import { AlbumSchema, IAlbum } from './audio.album.model'
+import { IAlbum } from './audio.album.model'
+import { customAlphabet } from 'nanoid'
 
 export interface ISong {
+    nano_id: string,
     title: string,
     artist: string,
     featured_artists: [string],
@@ -17,7 +18,12 @@ export interface ISong {
 }
 
 // Define a schema ie the shape a document will take in the db
-export const SongSchema = new mongoose.Schema<ISong>({
+export const SongSchema = new Schema<ISong>({
+
+    nano_id: {
+        type: String,
+        index: true
+    },
 
     title: {
         type: String,
@@ -93,21 +99,16 @@ export const SongSchema = new mongoose.Schema<ISong>({
 })
 
 SongSchema.index({ title: 1, artist: 1}, { unique: true })
-// SongSchema.pre('save', async function(next){
 
-//     const { artist, album, genre, release_year } = this
+// We don't want to use mongo._id in the api/axios requests so use nanoid instead
+SongSchema.pre('save', async function(next){
 
-//     const albumExists = await AlbumModel.findOne({ artist: artist, title: album })
-//     console.log('Album exists: ', albumExists)
-//     if (!albumExists) {
-//         const candidateAlbum = { artist, title: album, genre, release_year }
-//         console.log('creating album...')
-//         await AlbumModel.create(candidateAlbum)
-//         console.log(`${album} created`)
-//         return next()
-//     }
-//     return next()
-// })
+    const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+    const nano_id = nanoid()
+    this.nano_id = nano_id
+    
+    return next()
+})
 
 // Compile a model from our schema. This will be used to construct documents and read from documents
 export const SongModel = mongoose.model<ISong>('Song', SongSchema)

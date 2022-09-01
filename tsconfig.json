@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "sourceMap": true,
-    "lib": ["es5", "es6", "dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "incremental": true,                              
     "target": "es6",                                 
     "module": "commonjs", 
@@ -23,7 +23,6 @@
       "@config": ["src/config/config"],
       "@models": ["src/models/index"],
       "@users": ["src/users/index"],
-      "@stream": ["src/stream/index"],
       "@audio": ["src/audio/index"]
     }                                 
   },
