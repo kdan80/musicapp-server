@@ -2,7 +2,6 @@ import express, { Express, Request, Response } from 'express'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import cors from 'cors'
-import { playlist, createSong, error } from '@routes'
 import { UserRouter } from '@users'
 import { AudioRouter } from '@audio'
 import config from '@config'
@@ -36,10 +35,7 @@ app.use(express.json())
 
 
 // Routing
-app.use('/createSong', createSong)
 app.use('/audio', AudioRouter)
 app.use('/user', UserRouter)
-app.use('/error', error)
-app.use('/playlist', playlist)
 
 export default app
