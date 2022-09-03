@@ -100,18 +100,5 @@ export const SongSchema = new Schema<ISong>({
 
 SongSchema.index({ title: 1, artist: 1}, { unique: true })
 
-
-// SongSchema.pre('save', async function(next){
-
-//     // We don't want to use mongo._id in the api/axios requests so use nanoid instead
-//     const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
-//     const nano_id = nanoid()
-//     this.nano_id = nano_id
-    
-
-
-//     return next()
-// })
-
 // Compile a model from our schema. This will be used to construct documents and read from documents
 export const SongModel = mongoose.model<ISong>('Song', SongSchema)

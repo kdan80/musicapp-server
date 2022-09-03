@@ -25,11 +25,6 @@ const ArtistSchema = new mongoose.Schema<IArtist>({
     }
 })
 
-// Hash the incoming password before we save it
-// ArtistSchema.pre('save', async function(next){
-
-// })
-
 // Compile a model from our schema. This will be used to construct documents and read from documents
 const Artist = mongoose.model<IArtist>('Artist', ArtistSchema)
 
