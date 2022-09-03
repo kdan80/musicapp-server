@@ -14,8 +14,8 @@ export interface IAlbum {
     title: string,
     artist: string,
     featured_artists: [string],
-    track_list: [Track],
-    //track_list: [typeof SongSchema],
+    //track_list: [Track],
+    track_list: [typeof SongSchema],
     duration: number,
     genres: [string],
     release_year: number,
@@ -51,15 +51,14 @@ export const AlbumSchema = new Schema<IAlbum>({
     }],
 
     //Track_listing is an array of subdocuments
-    track_list: [{
-        type: Object,
-        default: []
-    }],
-
     // track_list: [{
-    //     type: SongSchema,
+    //     type: Object,
     //     default: []
     // }],
+
+    track_list: [{
+        type: SongSchema,
+    }],
 
     duration: {
         type: Number,

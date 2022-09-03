@@ -6,16 +6,15 @@ const create_album = async( req: Request, res: Response, next: NextFunction ) =>
     try {
 
         const {
-            title, artist, featured_artists, track_list, duration, genres, release_year, comment, number_of_discs, album_art
+            title, artist, featured_artists, duration, genres, release_year, comment, number_of_discs, album_art
         } = req.body.info
 
-        let album = await AlbumModel.findOne({ artist: artist, title: title})
-        if (!album) {
-            album = await AlbumModel.create({
+        let Album = await AlbumModel.findOne({ artist: artist, title: title})
+        if (!Album) {
+            Album = await AlbumModel.create({
                 title,
                 artist,
                 featured_artists,
-                track_list,
                 duration,
                 genres,
                 release_year,
@@ -24,9 +23,11 @@ const create_album = async( req: Request, res: Response, next: NextFunction ) =>
                 album_art,
                 path: req.body.path
             })
+
+            console.log(`${Album.title} was created`)
         }
 
-        req.body.album_id = album._id
+        req.body.album_id = Album._id
 
         next()
 
