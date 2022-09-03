@@ -9,9 +9,9 @@ const create_album = async( req: Request, res: Response, next: NextFunction ) =>
             title, artist, featured_artists, duration, genres, release_year, comment, number_of_discs, album_art
         } = req.body.info
 
-        let Album = await AlbumModel.findOne({ artist: artist, title: title})
-        if (!Album) {
-            Album = await AlbumModel.create({
+        let album = await AlbumModel.findOne({ artist: artist, title: title})
+        if (!album) {
+            album = await AlbumModel.create({
                 title,
                 artist,
                 featured_artists,
@@ -24,10 +24,10 @@ const create_album = async( req: Request, res: Response, next: NextFunction ) =>
                 path: req.body.path
             })
 
-            console.log(`${Album.title} was created`)
+            console.log(`${album.title} was created`)
         }
 
-        req.body.album_id = Album._id
+        req.body.album_id = album._id
 
         next()
 

@@ -1,12 +1,19 @@
 import express, { Request, Response, NextFunction } from 'express'
+import { AlbumModel } from '../models/audio.album.model'
+import paginate_results from '../middleware/audio.paginate_results.middleware'
 
 const router = express.Router()
 
-router.post('/', ( req: Request, res: Response, next: NextFunction ) => {
+router.use('/',
+    paginate_results
+)
+
+router.get('/', ( req: Request, res: Response, next: NextFunction ) => {
 
     try {
-        console.log(req.body.info)
-        res.status(200).send('jjj')
+        
+        res.status(200).json(res.paginated_results)
+
 
     } catch (err) {
         next(err)
