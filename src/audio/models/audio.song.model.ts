@@ -22,7 +22,8 @@ export const SongSchema = new Schema<ISong>({
 
     nano_id: {
         type: String,
-        index: true
+        index: true,
+        required: true,
     },
 
     title: {
@@ -108,7 +109,7 @@ SongSchema.pre('save', async function(next){
     const nano_id = nanoid()
     this.nano_id = nano_id
     
-    
+
 
     return next()
 })
