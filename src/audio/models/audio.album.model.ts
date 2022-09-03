@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, PopulatedDoc, ObjectId } from 'mongoose'
-import { SongSchema} from './audio.song.model'
+import { SongSchema } from './audio.song.model'
 
 type Track = {
     number: number,
@@ -15,6 +15,7 @@ export interface IAlbum {
     artist: string,
     featured_artists: [string],
     track_list: [Track],
+    //track_list: [typeof SongSchema],
     duration: number,
     genres: [string],
     release_year: number,
@@ -49,11 +50,16 @@ export const AlbumSchema = new Schema<IAlbum>({
         required: false
     }],
 
-    // Track_listing is an array of subdocuments
+    //Track_listing is an array of subdocuments
     track_list: [{
         type: Object,
         default: []
     }],
+
+    // track_list: [{
+    //     type: SongSchema,
+    //     default: []
+    // }],
 
     duration: {
         type: Number,

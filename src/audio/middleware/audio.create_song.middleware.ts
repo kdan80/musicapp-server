@@ -9,20 +9,20 @@ const create_song = async( req: Request, res: Response, next: NextFunction ) => 
             track_list
         } = req.body.info
 
-        for (const track of track_list){
-
-            let song = await SongModel.findOne({ artist: track.artist, title: track.title})
-            if (!song) {
-
-                song = await SongModel.create({
-                    ...track,
-                    album: req.body.album_id,
-                    path: `${req.body.path}/${track.path}`
-                })
+        const songs = []
+        for (const track of track_list) {
+            const song = {
+                ...track,
+                album: req.body.album,
+                path: `${req.body.path}/${track.path}`
             }
 
-            //console.log(`${track.title}: `, song)
+            songs.push(song)
         }
+
+        SongModel.insertMany(songs, (err) => {
+            if (err) console.log(err)
+        })
 
         next()
 
