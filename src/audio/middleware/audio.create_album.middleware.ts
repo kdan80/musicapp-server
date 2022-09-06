@@ -20,7 +20,7 @@ const create_album = async( req: Request, res: Response, next: NextFunction ) =>
                 release_year,
                 comment, 
                 number_of_discs,
-                album_art,
+                album_art: album_art ? album_art : undefined,
                 path: req.body.path
             })
 

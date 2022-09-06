@@ -48,7 +48,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({storage: storage})
-const UploadMiddleware = util.promisify(upload.array('album', 30))
+const UploadMiddleware = util.promisify(upload.array('album', 100))
 
 const upload_album = async( req: Request, res: Response, next: NextFunction ) => {
 

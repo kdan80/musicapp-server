@@ -41,6 +41,7 @@ prisma/dev.db-journal
 # misc
 .DS_Store
 *.pem
+/uploads
 
 # debug
 npm-debug.log*

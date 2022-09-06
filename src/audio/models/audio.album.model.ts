@@ -78,8 +78,7 @@ export const AlbumSchema = new Schema<IAlbum>({
 
     album_art: {
         type: String,
-        required: true,
-        default: 'album_art.jpg'
+        default: 'default_album_art.jpg'
     },
 
     path: {
