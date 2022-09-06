@@ -98,7 +98,7 @@ export const SongSchema = new Schema<ISong>({
     }
 })
 
-SongSchema.index({ title: 1, artist: 1}, { unique: true })
+SongSchema.index({ title: 1, artist: 1, album: 1}, { unique: true })
 
 // Compile a model from our schema. This will be used to construct documents and read from documents
 export const SongModel = mongoose.model<ISong>('Song', SongSchema)
