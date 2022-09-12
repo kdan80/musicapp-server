@@ -20,10 +20,8 @@
     "baseUrl": "./",                                  
     "paths": {
       "@config": ["src/config/config"],
-      "@core/*": ["src/core/*"],
-      "@models": ["src/models/index"],
-      "@users": ["src/users/index"],
-      "@audio": ["src/audio/index"]
+      "@models/*": ["src/models/*"],
+      "@middleware/*": ["src/middleware/*"],
     }                                 
   },
   "include": ["**/*"],

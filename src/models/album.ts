@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import { SongSchema } from './audio.song.model'
+import { SongSchema } from './song'
 
 export interface IAlbum {
     title: string,
@@ -96,4 +96,6 @@ export const AlbumSchema = new Schema<IAlbum>({
 AlbumSchema.index({ title: 1, artist: 1}, { unique: true })
 
 // Compile a model from our schema. This will be used to construct documents and read from documents
-export const AlbumModel = mongoose.model<IAlbum>('Album', AlbumSchema)
+const AlbumModel = mongoose.model<IAlbum>('Album', AlbumSchema)
+
+export default AlbumModel

@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express'
-import { permitted_methods } from 'src/core/middleware'
-import upload_album from '../middleware/audio.upload_album.middleware'
-import create_album from '../middleware/audio.create_album.middleware'
-import create_song from '../middleware/audio.create_song.middleware'
+import permitted_methods from 'src/middleware/permitted_methods'
+import upload_album from 'src/middleware/upload_album'
+import create_album from 'src/middleware/create_album'
+import create_song from 'src/middleware/create_song'
 const router = express.Router()
 
 // Upload Middleware

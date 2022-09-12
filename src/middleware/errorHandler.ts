@@ -6,7 +6,7 @@ interface ClientResponse {
     message: string
 }
 
-export const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Response, next: NextFunction ) => {
+const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Response, next: NextFunction ) => {
     // If headers have already been sent we must delegate to the default express error handler
     if (res.headersSent) {
         return next(err)
@@ -14,9 +14,11 @@ export const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Respo
   
     const clientResponse: ClientResponse = {
         status: 500,
-        name: 'AudioError',
-        message: err.message || 'GENRERIC_AUDIO_ERROR'
+        name: 'Error',
+        message: err.message || 'GENRERIC_ERROR'
     }
 
     return res.status(clientResponse.status).json(clientResponse)
 }
+
+export default errorHandler

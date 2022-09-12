@@ -1,8 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express'
-import { UserModel }  from '@users'
+import UserModel  from 'src/models/user'
 import bcrypt from 'bcrypt'
-import config from '../config'
-import { authenticate_request, permitted_methods } from 'src/core/middleware'
+import authenticate_request from 'src/middleware/authenticate_request'
+import permitted_methods from 'src/middleware/permitted_methods'
+
 
 const router = express.Router()
 
@@ -26,10 +27,10 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
         req.session._id = user._id
         req.session.username = username
-        req.session.message = config.login.msg_200_success
+        req.session.message = 'Login successful'
         req.session.isAuthenticated = true
 
-        return res.status(200).send(config.login.msg_200_success)
+        return res.status(200).send(req.session.message)
 
     } catch (err) {
         next(err)

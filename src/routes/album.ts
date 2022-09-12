@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express'
-import { authenticate_request ,permitted_methods } from 'src/core/middleware'
-import paginate_results from '../middleware/audio.paginate_results.middleware'
+import paginate_results from 'src/middleware/paginate_results'
+import authenticate_request from 'src/middleware/authenticate_request'
+import permitted_methods from 'src/middleware/permitted_methods'
 
 const router = express.Router()
 

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
-import config from './user.model.config'
+import config from './user.config'
 
 interface IUser {
     username: string,

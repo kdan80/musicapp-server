@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { AlbumModel } from '../models/audio.album.model'
+import AlbumModel from 'src/models/album'
 
 interface Results {
     next?: {

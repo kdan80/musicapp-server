@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express'
-import { SongModel } from '../models/audio.song.model';
+import SongModel from 'src/models/song';
 
 const router = express.Router()
 

@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import fs from 'fs';
 import { pipeline } from 'stream';
-import { SongModel } from '../models/audio.song.model'
+import SongModel from 'src/models/song'
 
 const router = express.Router();
 

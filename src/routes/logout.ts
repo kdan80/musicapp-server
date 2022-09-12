@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express'
-import config from '../config'
-import { permitted_methods } from '../middleware/user.middleware'
-import { superfluous_logout } from '../middleware/user.logout.middleware'
+import permitted_methods from 'src/middleware/permitted_methods'
+import superfluous_logout from 'src/middleware/superfluous_logout'
 
 const router = express.Router()
 
@@ -16,7 +15,7 @@ router.post('/', ( req: Request, res: Response ) => {
 
     req.session.destroy(err => {
         if (err) throw new Error('LOGOUT_ERROR')
-        return res.status(200).send(config.logout.msg_200_success)
+        return res.status(200).send('Logout successful')
     })
 
 })

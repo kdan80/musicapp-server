@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { UserSchema } from '@users'
-import { SongSchema } from './audio.song.model'
+import { SongSchema } from './song'
 
 interface IPlaylist {
     name: string,

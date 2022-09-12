@@ -2,10 +2,15 @@ import express, { Express, Request, Response } from 'express'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import cors from 'cors'
-import { UserRouter } from '@users'
-import { AudioRouter } from '@audio'
 import config from '@config'
+import album from 'src/routes/album'
+import upload from 'src/routes/upload'
+import stream from 'src/routes/stream'
 import start from './src/db/connect'
+import login from 'src/routes/login'
+import logout from 'src/routes/logout'
+import register from 'src/routes/register'
+import errorHandler from 'src/middleware/errorHandler'
 
 // Session store
 const sessionStore = MongoStore.create({ mongoUrl: config.mongo.uri })
@@ -33,9 +38,13 @@ start()
 app.use(cors())
 app.use(express.json())
 
-
 // Routing
-app.use('/audio', AudioRouter)
-app.use('/user', UserRouter)
+app.use('/upload', upload)
+app.use('/stream', stream)
+app.use('/album', album)
+app.use('/login', login)
+app.use('/logout', logout)
+app.use('/register', register)
+app.use(errorHandler)
 
 export default app
