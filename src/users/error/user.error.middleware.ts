@@ -15,7 +15,7 @@ export const errorHandler: ErrorRequestHandler = (err, req: Request, res: Respon
     const clientResponse: ClientResponse = {
         status: 500,
         name: 'UserError',
-        message: 'An error occured.'
+        message: err.message || 'An error occured.'
     }
 
     // Mongoose code for duplicate key error = 11000
@@ -52,6 +52,11 @@ export const errorHandler: ErrorRequestHandler = (err, req: Request, res: Respon
         case 'USER_NOT_FOUND':
             clientResponse.message = 'User not found.'
             clientResponse.status = 401
+            break
+
+        case 'SUPERFLUOUS_LOGIN':
+            clientResponse.message = 'Already logged in.'
+            clientResponse.status = 200
             break
 
         case 'SUPERFLUOUS_LOGOUT':

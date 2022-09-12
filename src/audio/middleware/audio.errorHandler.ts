@@ -15,9 +15,8 @@ export const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Respo
     const clientResponse: ClientResponse = {
         status: 500,
         name: 'AudioError',
-        message: 'An error occured.'
+        message: err.message || 'GENRERIC_AUDIO_ERROR'
     }
 
-    console.log('Err: ', err)
     return res.status(clientResponse.status).json(clientResponse)
 }

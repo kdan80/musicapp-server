@@ -2,15 +2,14 @@ import express, { NextFunction, Request, Response } from 'express'
 import { UserModel }  from '@users'
 import bcrypt from 'bcrypt'
 import config from '../config'
-import { permitted_methods } from '../middleware/user.middleware'
-import { superfluous_login } from '../middleware/user.login.middleware'
+import { authenticate_request, permitted_methods } from 'src/core/middleware'
 
 const router = express.Router()
 
 // Login Middleware
 router.use('/', 
+    authenticate_request,
     permitted_methods(['POST']),
-    superfluous_login
 );
 
 router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
