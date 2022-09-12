@@ -1,10 +1,12 @@
 import express, { Request, Response, NextFunction } from 'express'
-import { AlbumModel } from '../models/audio.album.model'
+import { authenticate_request ,permitted_methods } from 'src/core/middleware'
 import paginate_results from '../middleware/audio.paginate_results.middleware'
 
 const router = express.Router()
 
 router.use('/',
+    authenticate_request,
+    permitted_methods(['GET']),
     paginate_results
 )
 
