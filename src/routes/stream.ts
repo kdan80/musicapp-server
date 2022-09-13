@@ -11,12 +11,11 @@ router.get('/:nanoid', async( req: Request, res: Response, next: NextFunction ) 
             const nanoid = req.params.nanoid;
 
             const song = await SongModel.findOne({ nano_id: nanoid })
-            if (!song) throw new Error('Song not found')
+            if (!song) throw new Error('SONG_NOT_FOUND')
 
             const range: any = req.headers.range;
-            if (!range) {
-                throw new Error('Requires Range header');
-            }
+            if (!range) throw new Error('REQUIRES_RANGE_HEADER');
+            
 
             const fileSize = fs.statSync(song.path).size;
 
@@ -42,10 +41,7 @@ router.get('/:nanoid', async( req: Request, res: Response, next: NextFunction ) 
             pipeline(
                 readStream, 
                 res, 
-                (err) => {
-                    if (err) throw new Error('Pipeline error');
-                    console.log('Pipeline closed...');
-                }
+                (err) => { throw new Error('PIPELINE_ERROR') }
             )
 
     } catch (err) {
