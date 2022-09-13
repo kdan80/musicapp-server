@@ -21,7 +21,7 @@ const create_album = async( req: Request, res: Response, next: NextFunction ) =>
                 comment, 
                 number_of_discs,
                 album_art: album_art ? album_art : undefined,
-                path: req.body.path
+                path: `${process.env.MEDIA}/${req.body.album}`
             })
 
             console.log(`${album.title} was created`)

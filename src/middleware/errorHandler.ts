@@ -24,6 +24,11 @@ const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Response, ne
             clientResponse.message = 'Pipeline destroyed.'
             clientResponse.status = 500
             break
+        
+        case 'ALBUM_NOT_FOUND':
+            clientResponse.message = 'Album not found. No songs were added'
+            clientResponse.status = 500
+            break
 
         case 'REQUIRES_RANGE_HEADER':
             clientResponse.message = 'Range header not provided.'

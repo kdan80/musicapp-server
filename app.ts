@@ -4,7 +4,6 @@ import MongoStore from 'connect-mongo'
 import cors from 'cors'
 import config from '@config'
 import album from 'src/routes/album'
-import upload from 'src/routes/upload'
 import stream from 'src/routes/stream'
 import start from './src/db/connect'
 import login from 'src/routes/login'
@@ -39,7 +38,6 @@ app.use(cors())
 app.use(express.json())
 
 // Routing
-app.use('/upload', upload)
 app.use('/stream', stream)
 app.use('/album', album)
 app.use('/login', login)

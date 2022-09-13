@@ -19,7 +19,7 @@ const create_song = async( req: Request, res: Response, next: NextFunction ) => 
                 nano_id: nanoid(),
                 ...track,
                 album: req.body.album_id,
-                path: `${req.body.path}/${track.path}`
+                filename: `${track.filename}`
             }
 
             candidate_songs.push(song)

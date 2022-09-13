@@ -12,7 +12,7 @@ export interface ISong {
     duration: number,
     genres: [string],
     release_year: number,
-    path: string,
+    filename: string,
     createdAt: Date,
 }
 
@@ -88,7 +88,7 @@ export const SongSchema = new Schema<ISong>({
         ]
     },
 
-    path: {
+    filename: {
         type: String
     },
 
