@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt'
 import authenticate_request from 'src/middleware/authenticate_request'
 import permitted_methods from 'src/middleware/permitted_methods'
 
-
 const router = express.Router()
 
 // Login Middleware
@@ -29,6 +28,7 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
         req.session.username = username
         req.session.message = 'Login successful'
         req.session.isAuthenticated = true
+        req.session.isAdmin = user.isAdmin
 
         return res.status(200).send(req.session.message)
 

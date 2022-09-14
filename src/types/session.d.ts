@@ -7,6 +7,7 @@ declare module 'express-session' {
         email: string,
         username: string,
         message: string,
-        isAuthenticated: boolean
+        isAuthenticated: boolean,
+        isAdmin?: boolean
     }
 }

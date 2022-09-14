@@ -20,6 +20,11 @@ const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Response, ne
 
     switch (err.message) {
 
+        case 'NOT_ADMIN':
+            clientResponse.message = 'You must be an admin to perform that operation.'
+            clientResponse.status = 403
+            break
+
         case 'PIPELINE_ERROR':
             clientResponse.message = 'Pipeline destroyed.'
             clientResponse.status = 500

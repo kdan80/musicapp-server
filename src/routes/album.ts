@@ -4,6 +4,7 @@ import authenticate_request from 'src/middleware/authenticate_request'
 import permitted_methods from 'src/middleware/permitted_methods'
 import create_album from 'src/middleware/create_album'
 import create_song from 'src/middleware/create_song'
+import is_admin from '@middleware/is_admin'
 
 const router = express.Router()
 
@@ -28,6 +29,7 @@ router.get('/',
 
 // Route for creating an AlbumModel + SongModels in the mongo store
 router.post('/', 
+    is_admin,
     create_album,
     create_song,
     ( req: Request, res: Response, next: NextFunction ) => {
