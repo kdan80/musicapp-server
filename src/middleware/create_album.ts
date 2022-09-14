@@ -6,7 +6,7 @@ const create_album = async( req: Request, res: Response, next: NextFunction ) =>
     try {
 
         const {
-            title, artist, featured_artists, duration, genres, release_year, comment, number_of_discs, album_art
+            title, artist, featured_artists, duration, genres, release_year, number_of_discs, album_art
         } = req.body.info
 
         let album = await AlbumModel.findOne({ artist: artist, title: title})
@@ -18,10 +18,10 @@ const create_album = async( req: Request, res: Response, next: NextFunction ) =>
                 duration,
                 genres,
                 release_year,
-                comment, 
+                comment: req.body.comment, 
                 number_of_discs,
                 album_art: album_art ? album_art : undefined,
-                path: `${process.env.MEDIA}/${req.body.album}`
+                path: `${process.env.MEDIA}/${req.body.artist}/${req.body.album}`
             })
 
             console.log(`${album.title} was created`)
