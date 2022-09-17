@@ -4,6 +4,7 @@ interface Mongo {
 
 interface Server {
     port: string
+    client_domain: string
 }
 
 interface Session {
@@ -28,30 +29,25 @@ const MONGO_OPTIONS = {
     retryWrites: false
 };
 
-const MONGODB_URI = process.env.MONGODB_URI ?? '';
-
 const MONGO: Mongo = {
     //options: MONGO_OPTIONS,
-    uri: MONGODB_URI
+    uri: process.env.MONGODB_URI || ''
 }
-
-const SERVER_PORT = process.env.PORT ?? '';
 
 const SERVER: Server = {
-    port: SERVER_PORT
+    port: process.env.PORT || '',
+    client_domain: process.env.CLIENT_DOMAIN || ''
 }
 
-const SESSION_SECRET = process.env.SESSION_SECRET ?? '';
-
 const SESSION: Session = {
-    secret: SESSION_SECRET
+    secret: process.env.SESSION_SECRET || ''
 }
 
 const config: Config = {
     mongo: MONGO,
     server: SERVER,
     session: SESSION,
-    node_env: process.env.NODE_ENV ?? ''
+    node_env: process.env.NODE_ENV || ''
 }
 
 export default config;

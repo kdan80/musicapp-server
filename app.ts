@@ -13,29 +13,32 @@ import errorHandler from 'src/middleware/errorHandler'
 
 // Session store
 const sessionStore = MongoStore.create({ mongoUrl: config.mongo.uri })
+const isProduction = config.node_env === 'production'
+const client_domain = config.server.client_domain
 
 // App settings
 const app: Express = express()
 app.use(express.static(__dirname + '/public'))
+app.use(cors({
+    origin: client_domain,
+    credentials: true
+}))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(session({
     secret: config.session.secret,
     store: sessionStore,
     resave: false,
-    saveUninitialized: false,
-    cookie: { 
-        httpOnly: true,
-        maxAge: 300000,
-        secure: config.node_env === 'production',
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: false,
+        maxAge: 24 * 60 * 60 * 1000,
+        secure: isProduction,
+        sameSite: isProduction ? 'none' : false
     }
 }))
 
 start()
-
-// Middleware
-app.use(cors())
-app.use(express.json())
 
 // Routing
 app.use('/stream', stream)
