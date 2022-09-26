@@ -9,7 +9,7 @@ const router = express.Router()
 // Login Middleware
 router.use('/', 
     authenticate_request,
-    permitted_methods(['POST']),
+    permitted_methods(['POST'])
 );
 
 router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
@@ -30,10 +30,11 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
         req.session.isAuthenticated = true
         req.session.isAdmin = user.isAdmin
 
+        console.log(`Session created for ${username}`)
         return res.status(200).send(req.session.message)
 
     } catch (err) {
-        next(err)
+        return next(err)
     }
 });
 

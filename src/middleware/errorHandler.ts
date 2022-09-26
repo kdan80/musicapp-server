@@ -46,7 +46,7 @@ const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Response, ne
             break
 
         case 'NOT_AUTHENTICATED':
-            clientResponse.message = 'Permission denied.'
+            clientResponse.message = 'Permission denied. Not authenticated'
             clientResponse.status = 401
             break
 
@@ -66,7 +66,7 @@ const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Response, ne
             break
             
         case 'USER_NOT_FOUND':
-            clientResponse.message = 'User not found.'
+            clientResponse.message = 'Username or password was incorrect.'
             clientResponse.status = 401
             break
 

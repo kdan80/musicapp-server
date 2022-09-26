@@ -9,6 +9,7 @@ import start from './src/db/connect'
 import login from 'src/routes/login'
 import logout from 'src/routes/logout'
 import register from 'src/routes/register'
+import test from 'src/routes/test'
 import errorHandler from 'src/middleware/errorHandler'
 
 // Session store
@@ -41,9 +42,10 @@ app.use(session({
 start()
 
 // Routing
+app.use('/login', login)
+app.use('/test', test)
 app.use('/stream', stream)
 app.use('/album', album)
-app.use('/login', login)
 app.use('/logout', logout)
 app.use('/register', register)
 app.use(errorHandler)
