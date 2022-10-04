@@ -29,7 +29,7 @@ router.get('/',
 
 // Route for creating an AlbumModel + SongModels in the mongo store
 router.post('/', 
-    is_admin,
+    //is_admin,
     create_album,
     create_song,
     ( req: Request, res: Response, next: NextFunction ) => {
