@@ -11,22 +11,11 @@ import logout from 'src/routes/logout'
 import register from 'src/routes/register'
 import test from 'src/routes/test'
 import errorHandler from 'src/middleware/errorHandler'
-import Minio from 'minio'
 
 // Session store
 const sessionStore = MongoStore.create({ mongoUrl: config.mongo.uri })
 const isProduction = config.node_env === 'production'
 const client_domain = config.server.client_domain
-
-// Minio
-
-// const minioClient = new Minio.Client({
-//     endPoint: '192.168.1.26',
-//     port: 9001,
-//     useSSL: true,
-//     accessKey: 'musicapp',
-//     secretKey: '@AB106SJdd11bq'
-// });
 
 // App settings
 const app: Express = express()

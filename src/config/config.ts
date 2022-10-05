@@ -3,7 +3,7 @@ interface Mongo {
 }
 
 interface Server {
-    port: string
+    port: number
     client_domain: string
 }
 
@@ -11,10 +11,18 @@ interface Session {
     secret: string
 }
 
+interface Minio {
+    end_point: string
+    port: number
+    access_key: string
+    secret_key: string
+}
+
 interface Config {
-    mongo: Mongo,
-    server: Server,
-    session: Session,
+    mongo: Mongo
+    server: Server
+    session: Session
+    minio: Minio
     node_env: string
 }
 
@@ -31,23 +39,31 @@ const MONGO_OPTIONS = {
 
 const MONGO: Mongo = {
     //options: MONGO_OPTIONS,
-    uri: process.env.MONGODB_URI || ''
+    uri: process.env.MONGODB_URI
 }
 
 const SERVER: Server = {
-    port: process.env.PORT || '',
-    client_domain: process.env.CLIENT_DOMAIN || ''
+    port: process.env.PORT,
+    client_domain: process.env.CLIENT_DOMAIN
 }
 
 const SESSION: Session = {
-    secret: process.env.SESSION_SECRET || ''
+    secret: process.env.SESSION_SECRET
+}
+
+const MINIO: Minio = {
+    end_point: process.env.MINIO_ENDPOINT,
+    port: process.env.MINIO_PORT,
+    secret_key: process.env.MINIO_SECRET_KEY,
+    access_key: process.env.MINIO_ACCESS_KEY
 }
 
 const config: Config = {
     mongo: MONGO,
     server: SERVER,
     session: SESSION,
-    node_env: process.env.NODE_ENV || ''
+    minio: MINIO,
+    node_env: process.env.NODE_ENV
 }
 
 export default config;
