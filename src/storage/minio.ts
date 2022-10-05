@@ -1,10 +1,10 @@
 import * as Minio from 'minio'
-import config from '@config'
+import config from 'src/config/config'
 
 // Minio
 const minioClient = new Minio.Client({
-    endPoint: '192.168.1.26',
-    port: 9000,
+    endPoint: config.minio.end_point,
+    port: config.minio.port,
     useSSL: false,
     accessKey: config.minio.access_key,
     secretKey: config.minio.secret_key
