@@ -14,6 +14,7 @@ interface Session {
 interface Minio {
     end_point: string
     port: number
+    bucket: string
     access_key: string
     secret_key: string
 }
@@ -54,6 +55,7 @@ const SESSION: Session = {
 const MINIO: Minio = {
     end_point: process.env.MINIO_ENDPOINT,
     port: process.env.MINIO_PORT,
+    bucket: process.env.MINIO_BUCKET,
     secret_key: process.env.MINIO_SECRET_KEY,
     access_key: process.env.MINIO_ACCESS_KEY
 }

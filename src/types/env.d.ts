@@ -16,6 +16,7 @@ declare global {
             // Minio envars
             readonly MINIO_PORT: number
             readonly MINIO_ENDPOINT: string
+            readonly MINIO_BUCKET: string
             readonly MINIO_SECRET_KEY: string
             readonly MINIO_ACCESS_KEY: string
         }
