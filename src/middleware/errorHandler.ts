@@ -31,7 +31,7 @@ const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Response, ne
             break
         
         case 'ALBUM_NOT_FOUND':
-            clientResponse.message = 'Album not found. No songs were added'
+            clientResponse.message = 'Album not found.'
             clientResponse.status = 500
             break
 
