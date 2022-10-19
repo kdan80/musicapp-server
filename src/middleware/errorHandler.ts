@@ -20,6 +20,11 @@ const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Response, ne
 
     switch (err.message) {
 
+        case 'MINIO_ERROR':
+            clientResponse.message = 'MinIO Error.'
+            clientResponse.status = 401
+            break
+
         case 'NOT_ADMIN':
             clientResponse.message = 'You must be an admin to perform that operation.'
             clientResponse.status = 403

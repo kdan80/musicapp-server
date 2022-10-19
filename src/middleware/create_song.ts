@@ -35,7 +35,7 @@ const create_song = async( req: Request, res: Response, next: NextFunction ) => 
 
         if (!Album) throw new Error('ALBUM_NOT_FOUND')
         
-        console.log(`track_list added to ${Album.title}`)
+        //console.log(`track_list added to ${Album.title}`)
        
         next()
 

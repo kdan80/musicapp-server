@@ -4,7 +4,7 @@ import AlbumModel from 'src/models/album'
 const create_album = async( req: Request, res: Response, next: NextFunction ) => {
 
     try {
-        console.log('creating album...')
+        //console.log('creating album...')
 
         const {
             title, artist, featured_artists, duration, genres, release_year, number_of_discs, album_art
@@ -25,7 +25,7 @@ const create_album = async( req: Request, res: Response, next: NextFunction ) =>
                 path: `${req.body.artist}/${req.body.album}`
             })
 
-            console.log(`${album.title} was created`)
+            //console.log(`${album.title} was created`)
         }
 
         req.body.album_id = album._id

@@ -2,8 +2,15 @@ import express, { NextFunction, Request, Response } from 'express';
 import minioClient from 'src/storage/minio';
 import config from '@config';
 import AlbumModel from '@models/album';
+import authenticate_request from '@middleware/authenticate_request';
+import permitted_methods from '@middleware/permitted_methods';
 
 const router = express.Router();
+
+router.use('/',
+    permitted_methods(['GET']),
+    authenticate_request
+)
 
 router.get('/:id', async( req: Request, res: Response, next: NextFunction ) => {
     
@@ -22,7 +29,7 @@ router.get('/:id', async( req: Request, res: Response, next: NextFunction ) => {
             const file = `${albumPath}/${track.filename}`
 
             minioClient.presignedUrl('GET', config.minio.bucket, file, 24*60*60, function(err, presignedUrl) {
-                if (err) return console.log(err)
+                if (err) throw new Error('MINIO_ERROR')
                 presignedUrls.push(presignedUrl)
             })
         }
