@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 interface Mongo {
     uri: string
 }
@@ -41,8 +44,6 @@ const MONGO_OPTIONS = {
 const MONGO: Mongo = {
     //options: MONGO_OPTIONS,
     uri: process.env.MONGODB_URI
-        
-    
 }
 
 const SERVER: Server = {

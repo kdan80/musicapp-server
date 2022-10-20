@@ -2,15 +2,15 @@ import express, { Express, Request, Response } from 'express'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import cors from 'cors'
-import config from '@config'
-import album from 'src/routes/album'
-import stream from 'src/routes/stream'
+import config from './src/config/config'
+import album from './src/routes/album'
+import stream from './src/routes/stream'
 import start from './src/db/connect'
-import login from 'src/routes/login'
-import logout from 'src/routes/logout'
-import register from 'src/routes/register'
-import test from 'src/routes/test'
-import errorHandler from 'src/middleware/errorHandler'
+import login from './src/routes/login'
+import logout from './src/routes/logout'
+import register from './src/routes/register'
+import test from './src/routes/test'
+import errorHandler from './src/middleware/errorHandler'
 
 // Session store
 const sessionStore = MongoStore.create({ mongoUrl: config.mongo.uri })
@@ -42,6 +42,7 @@ app.use(session({
     }
 }))
 
+// Start the database
 start()
 
 // Routing
@@ -53,4 +54,4 @@ app.use('/logout', logout)
 app.use('/register', register)
 app.use(errorHandler)
 
-export default app
+app.listen(config.server.port, () => console.log(`listening on ${config.server.port}`))

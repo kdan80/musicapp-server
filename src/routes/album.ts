@@ -1,9 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express'
-import paginate_results from 'src/middleware/paginate_results'
-import authenticate_request from 'src/middleware/authenticate_request'
-import permitted_methods from 'src/middleware/permitted_methods'
-import create_album from 'src/middleware/create_album'
-import create_song from 'src/middleware/create_song'
+import paginate_results from '../middleware/paginate_results'
+import authenticate_request from '../middleware/authenticate_request'
+import permitted_methods from '../middleware/permitted_methods'
+import create_album from '../middleware/create_album'
+import create_song from '../middleware/create_song'
 
 const router = express.Router()
 

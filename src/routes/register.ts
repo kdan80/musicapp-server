@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express'
-import permitted_methods from 'src/middleware/permitted_methods'
-import UserModel from 'src/models/user'
+import permitted_methods from '../middleware/permitted_methods'
+import UserModel from '../models/user'
 
 const router = express.Router()
 

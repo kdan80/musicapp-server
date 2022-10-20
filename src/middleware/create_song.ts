@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import SongModel from 'src/models/song'
-import AlbumModel from 'src/models/album'
+import SongModel from '../../src/models/song'
+import AlbumModel from '../../src/models/album'
 import { customAlphabet } from 'nanoid'
 
 const create_song = async( req: Request, res: Response, next: NextFunction ) => {

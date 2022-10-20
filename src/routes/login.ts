@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express'
-import UserModel  from 'src/models/user'
+import UserModel  from '../models/user'
 import bcrypt from 'bcrypt'
-import authenticate_request from 'src/middleware/authenticate_request'
-import permitted_methods from 'src/middleware/permitted_methods'
+import authenticate_request from '../middleware/authenticate_request'
+import permitted_methods from '../middleware/permitted_methods'
 
 const router = express.Router()
 

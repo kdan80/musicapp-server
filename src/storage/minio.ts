@@ -1,5 +1,5 @@
 import * as Minio from 'minio'
-import config from 'src/config/config'
+import config from '../config/config'
 
 // Minio
 const minioClient = new Minio.Client({

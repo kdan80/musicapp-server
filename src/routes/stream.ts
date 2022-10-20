@@ -1,9 +1,9 @@
-import express, { NextFunction, Request, Response } from 'express';
-import minioClient from 'src/storage/minio';
-import config from '@config';
-import AlbumModel from '@models/album';
-import authenticate_request from '@middleware/authenticate_request';
-import permitted_methods from '@middleware/permitted_methods';
+import express, { NextFunction, Request, Response } from 'express'
+import minioClient from '../storage/minio'
+import config from '../config/config'
+import AlbumModel from '../models/album'
+import authenticate_request from '../middleware/authenticate_request'
+import permitted_methods from '../middleware/permitted_methods'
 
 const router = express.Router();
 
@@ -54,7 +54,7 @@ router.get('/:id', async( req: Request, res: Response, next: NextFunction ) => {
         return res.status(200).json(response)      
     
     } catch (err) {
-        next(err);
+        next(err)
     }
 });
 

@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
-import permitted_methods from 'src/middleware/permitted_methods'
-import superfluous_logout from 'src/middleware/superfluous_logout'
+import permitted_methods from '../middleware/permitted_methods'
+import superfluous_logout from '../middleware/superfluous_logout'
 
 const router = express.Router()
 

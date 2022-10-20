@@ -2,11 +2,12 @@
   "name": "musicapp-server",
   "description": "Music streaming app",
   "version": "1.0.0",
-  "main": "server.ts",
+  "main": "index.ts",
   "scripts": {
     "start": "node dist/index.js",
     "postinstall": "tsc",
-    "dev": "tsnd --exit-child --transpile-only -r tsconfig-paths/register -r dotenv/config -- server.ts",
+    "build": "tsc --build",
+    "dev": "tsnd --exit-child --transpile-only -r tsconfig-paths/register -r dotenv/config -- index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": { "node": "16.17.0" },
