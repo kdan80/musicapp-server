@@ -32,9 +32,10 @@ app.use(session({
     store: sessionStore,
     resave: false,
     saveUninitialized: true,
+    rolling: true,
     cookie: {
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 20 * 60 * 1000,
         secure: isProduction,
         sameSite: isProduction ? 'none' : 'lax'
     }

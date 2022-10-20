@@ -3,6 +3,7 @@ declare global {
         interface ProcessEnv {
             // Mongo envars
             readonly MONGODB_URI: string
+            readonly MONGODB_URI_DEV: string
 
             // Express session envars
             readonly SESSION_SECRET: string
