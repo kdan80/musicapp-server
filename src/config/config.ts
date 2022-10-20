@@ -40,9 +40,8 @@ const MONGO_OPTIONS = {
 
 const MONGO: Mongo = {
     //options: MONGO_OPTIONS,
-    uri: process.env.NODE_ENV === 'production'
-        ? process.env.MONGODB_URI
-        : process.env.MONGODB_URI_DEV
+    uri: process.env.MONGODB_URI
+        
     
 }
 
