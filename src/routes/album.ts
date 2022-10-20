@@ -16,8 +16,10 @@ router.get('/',
     paginate_results,
     ( req: Request, res: Response, next: NextFunction ) => {
 
+    const paginated_results = req.body.paginated_results
+
     try {
-        res.status(200).json(res.paginated_results)
+        res.status(200).json(paginated_results)
     } catch (err) {
         next(err)
     }

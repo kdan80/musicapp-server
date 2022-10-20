@@ -38,7 +38,7 @@ const paginate_results = async( req: Request, res: Response, next: NextFunction 
         }
 
         results.results = await AlbumModel.find().sort({artist: 1}).limit(limit).skip(startIndex).exec()
-        res.paginated_results = results
+        req.body.paginated_results = results
 
         next()
 
