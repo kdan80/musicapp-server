@@ -7,6 +7,18 @@ import permitted_methods from '@middleware/permitted_methods';
 
 const router = express.Router();
 
+// Wrap the minioClient request in a promise
+const getPresignedUrl = (file: string): Promise<string> => {
+    
+    return new Promise((resolve, reject) => {
+        
+        minioClient.presignedUrl('GET', config.minio.bucket, file, 24*60*60, function(err, presignedUrl) {
+            if (err) reject(err)
+            resolve(presignedUrl)
+        })
+    })
+}
+
 router.use('/',
     permitted_methods(['GET']),
     authenticate_request
@@ -14,6 +26,7 @@ router.use('/',
 
 router.get('/:id', async( req: Request, res: Response, next: NextFunction ) => {
     
+
     try {
 
         const presignedUrls: string[] = []
@@ -24,20 +37,19 @@ router.get('/:id', async( req: Request, res: Response, next: NextFunction ) => {
         const albumPath = album.path
         album.track_list.sort((a: any, b: any) => a.track_number - b.track_number)
 
-        for await (const track of album.track_list) {
+        for (const track of album.track_list) {
 
             const file = `${albumPath}/${track.filename}`
 
-            minioClient.presignedUrl('GET', config.minio.bucket, file, 24*60*60, function(err, presignedUrl) {
-                if (err) throw new Error('MINIO_ERROR')
-                presignedUrls.push(presignedUrl)
-            })
+            const url = await getPresignedUrl(file)
+            if (!url) throw new Error('MINIO_ERROR')
+            presignedUrls.push(url)
         }
 
         const response = {
             "presignedUrls": presignedUrls
         }
-        
+
         return res.status(200).json(response)      
     
     } catch (err) {
@@ -46,3 +58,59 @@ router.get('/:id', async( req: Request, res: Response, next: NextFunction ) => {
 });
 
 export default router;
+
+
+
+
+
+
+
+// import express, { NextFunction, Request, Response } from 'express';
+// import minioClient from 'src/storage/minio';
+// import config from '@config';
+// import AlbumModel from '@models/album';
+// import authenticate_request from '@middleware/authenticate_request';
+// import permitted_methods from '@middleware/permitted_methods';
+
+// const router = express.Router();
+
+// router.use('/',
+//     permitted_methods(['GET']),
+//     authenticate_request
+// )
+
+// router.get('/:id', async( req: Request, res: Response, next: NextFunction ) => {
+    
+//     try {
+
+//         const presignedUrls: string[] = []
+
+//         const album = await AlbumModel.findOne({ _id: req.params.id })
+//         if (!album) throw new Error('ALBUM_NOT_FOUND')
+
+//         const albumPath = album.path
+//         album.track_list.sort((a: any, b: any) => a.track_number - b.track_number)
+
+//         for await (const track of album.track_list) {
+
+//             const file = `${albumPath}/${track.filename}`
+
+//             minioClient.presignedUrl('GET', config.minio.bucket, file, 24*60*60, function(err, presignedUrl) {
+//                 if (err) throw new Error('MINIO_ERROR')
+//                 console.log('URL: ', presignedUrl)
+//                 presignedUrls.push(presignedUrl)
+//             })
+//         }
+
+//         const response = {
+//             "presignedUrls": presignedUrls
+//         }
+        
+//         return res.status(200).json(response)      
+    
+//     } catch (err) {
+//         next(err);
+//     }
+// });
+
+// export default router;
