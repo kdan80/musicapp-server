@@ -16,6 +16,7 @@ import errorHandler from './src/middleware/errorHandler'
 // Session store
 const sessionStore = MongoStore.create({ mongoUrl: config.mongo.uri })
 const isProduction = config.node_env === 'production'
+console.log('XX isProduction: ', isProduction)
 
 // App settings
 const app: Express = express()

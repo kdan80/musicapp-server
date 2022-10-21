@@ -16,7 +16,7 @@ router.get('/',
     paginate_results,
     ( req: Request, res: Response, next: NextFunction ) => {
 
-    console.log('XX Album: ', req.url)
+    console.log('XX Album: ', req.originalUrl)
     const paginated_results = req.body.paginated_results
 
     try {
