@@ -3,8 +3,7 @@ import config from '../../src/config/config'
 
 const start = async() => {
     try {
-        //await connect(config.mongo.uri)
-        await connect('mongodb://127.0.0.1/musicapp')
+        await connect(config.mongo.uri)
         console.log('Connected to mongodb...')
     }
     catch(error: any){

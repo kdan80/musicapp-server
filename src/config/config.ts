@@ -2,6 +2,16 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 interface Mongo {
+    options: {
+        useUnifiedTopology?: boolean
+        useNewUrlParser?: boolean
+        useCreateIndex?: boolean
+        socketTimeoutMS?: number
+        keepAlive?: boolean
+        poolSize?: number
+        autoIndex?: boolean
+        retryWrites?: boolean
+    }
     uri: string
 }
 
@@ -38,11 +48,11 @@ const MONGO_OPTIONS = {
     keepAlive: true,
     poolSize: 50,
     autoIndex: false,
-    retryWrites: false
+    retryWrites: true
 };
 
 const MONGO: Mongo = {
-    //options: MONGO_OPTIONS,
+    options: MONGO_OPTIONS,
     uri: process.env.MONGODB_URI
 }
 
