@@ -20,7 +20,7 @@ const getPresignedUrl = (file: string): Promise<string> => {
 }
 
 router.use('/',
-    permitted_methods(['GET']),
+    //permitted_methods(['GET']),
     authenticate_request
 )
 

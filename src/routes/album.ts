@@ -8,7 +8,7 @@ import create_song from '../middleware/create_song'
 const router = express.Router()
 
 router.use('/',
-    permitted_methods(['GET', 'POST']),
+    //permitted_methods(['GET', 'POST']),
 )
 
 router.get('/', 

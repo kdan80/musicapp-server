@@ -6,7 +6,7 @@ const router = express.Router()
 
 // Middleware
 router.use(
-    permitted_methods(['POST'])
+    //permitted_methods(['POST'])
 )
 
 router.post('/', async( req: Request, res: Response, next: NextFunction ) => {

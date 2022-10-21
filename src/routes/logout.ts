@@ -6,7 +6,7 @@ const router = express.Router()
 
 // Logout Middlewares
 router.use('/', 
-    permitted_methods(['POST']),
+    //permitted_methods(['POST']),
     superfluous_logout,
 )
 
