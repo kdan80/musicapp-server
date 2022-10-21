@@ -4,7 +4,7 @@ import permitted_methods from '../middleware/permitted_methods';
 const router = express.Router()
 
 router.use('/', 
-    permitted_methods(['GET'])
+    //permitted_methods(['GET'])
 );
 
 router.get('/', ( req: Request, res: Response, next: NextFunction ) => {

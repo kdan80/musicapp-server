@@ -8,6 +8,7 @@ import stream from './src/routes/stream'
 import start from './src/db/connect'
 import login from './src/routes/login'
 import logout from './src/routes/logout'
+import test from './src/routes/test'
 import register from './src/routes/register'
 import index from './src/routes/index'
 import errorHandler from './src/middleware/errorHandler'
@@ -50,6 +51,7 @@ start()
 // Routing
 app.use('/', index)
 app.use('/login', login)
+app.use('/test', test)
 app.use('/stream', stream)
 app.use('/album', album)
 app.use('/logout', logout)
