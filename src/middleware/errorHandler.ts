@@ -51,6 +51,7 @@ const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Response, ne
             break
 
         case 'NOT_AUTHENTICATED':
+            clientResponse.name = 'NOT_AUTHENTICATED'
             clientResponse.message = 'Permission denied. Not authenticated'
             clientResponse.status = 401
             break
@@ -61,6 +62,7 @@ const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Response, ne
             break
 
         case 'UNPERMITTED_METHOD':
+            clientResponse.name = 'UNPERMITTED_METHOD'
             clientResponse.message = 'Permission denied. Illegal operation.'
             clientResponse.status = 405
             break
