@@ -42,8 +42,7 @@ app.use(session({
         domain: config.server.client_domain,
         maxAge: 20 * 60 * 1000,
         secure: isProduction,
-        //sameSite: isProduction ? 'none' : 'lax'
-        sameSite: false
+        sameSite: isProduction ? 'none' : 'lax'
     }
 }))
 
