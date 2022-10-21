@@ -16,7 +16,7 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
     try {
 
-        console.log('XX Login route: ', req.path )
+        console.log('XX Login route: ', req.url )
         const { username, password } = req.body
 
         const user = await UserModel.findOne({username})
