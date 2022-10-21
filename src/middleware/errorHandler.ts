@@ -61,6 +61,7 @@ const errorHandler: ErrorRequestHandler = ( err, req: Request, res: Response, ne
             break
 
         case 'UNPERMITTED_METHOD':
+            clientResponse.name = 'TESTTESTTEST'
             clientResponse.message = 'Permission denied. Illegal operation.'
             clientResponse.status = 405
             break
