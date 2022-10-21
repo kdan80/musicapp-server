@@ -7,9 +7,10 @@ import permitted_methods from '../middleware/permitted_methods'
 const router = express.Router()
 
 // Login Middleware
-// router.use('/', 
-//     authenticate_request,
-// );
+router.use('/', 
+    authenticate_request,
+    permitted_methods(['PUSH', 'OPTIONS'])
+);
 
 router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
