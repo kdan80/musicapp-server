@@ -12,7 +12,7 @@ const router = express.Router()
 // )
 
 router.get('/', 
-    //authenticate_request,
+    authenticate_request,
     paginate_results,
     ( req: Request, res: Response, next: NextFunction ) => {
 
