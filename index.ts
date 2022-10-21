@@ -22,9 +22,12 @@ const app: Express = express()
 app.use(express.static(__dirname + '/public'))
 
 app.use(cors({
-    origin: client_domain,
-    credentials: true
+    origin: '*'
+    //origin: client_domain,
+    //credentials: true
 }))
+
+
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
