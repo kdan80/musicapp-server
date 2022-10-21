@@ -9,7 +9,7 @@ const router = express.Router()
 // Login Middleware
 router.use('/', 
     authenticate_request,
-    //permitted_methods(['PUSH', 'OPTIONS'])
+    permitted_methods(['PUSH', 'OPTIONS'])
 );
 
 router.post('/', async( req: Request, res: Response, next: NextFunction ) => {

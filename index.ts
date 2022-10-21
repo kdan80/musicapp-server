@@ -27,7 +27,6 @@ app.use(cors({
     credentials: true
 }))
 
-
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
@@ -39,7 +38,6 @@ app.use(session({
     rolling: true,
     cookie: {
         httpOnly: true,
-        domain: config.server.client_domain,
         maxAge: 20 * 60 * 1000,
         secure: isProduction,
         sameSite: isProduction ? 'none' : 'lax'

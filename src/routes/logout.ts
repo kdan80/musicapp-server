@@ -5,10 +5,10 @@ import superfluous_logout from '../middleware/superfluous_logout'
 const router = express.Router()
 
 // Logout Middlewares
-// router.use('/', 
-//     permitted_methods(['POST']),
-//     superfluous_logout,
-// )
+router.use('/', 
+    permitted_methods(['POST']),
+    superfluous_logout,
+)
 
 // Express automatically passes errors to next() with synchronous routers
 router.post('/', ( req: Request, res: Response ) => {
