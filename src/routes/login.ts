@@ -7,9 +7,9 @@ import permitted_methods from '../middleware/permitted_methods'
 const router = express.Router()
 
 // Login Middleware
-router.use('/', 
-    authenticate_request,
-);
+// router.use('/', 
+//     authenticate_request,
+// );
 
 router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
 
@@ -29,7 +29,7 @@ router.post('/', async( req: Request, res: Response, next: NextFunction ) => {
         req.session.isAuthenticated = true
         req.session.isAdmin = user.isAdmin
 
-        //console.log(`Session created for ${username}`)
+        console.log(`Session created for ${username}`)
         return res.status(200).send(req.session.message)
 
     } catch (err) {

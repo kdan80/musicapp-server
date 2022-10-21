@@ -56,4 +56,4 @@ app.use('/logout', logout)
 app.use('/register', register)
 app.use(errorHandler)
 
-app.listen(config.server.port, () => console.log(`Listening on ${config.server.port}`))
+app.listen(config.server.port, () => console.log(`Listening on port ${config.server.port}`))
