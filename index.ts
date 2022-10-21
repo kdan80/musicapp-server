@@ -34,11 +34,12 @@ app.use(express.urlencoded({extended: true}))
 app.use(session({
     secret: config.session.secret,
     store: sessionStore,
-    resave: true,
+    resave: false,
     saveUninitialized: false,
     rolling: true,
     cookie: {
         httpOnly: true,
+        domain: config.server.client_domain,
         maxAge: 20 * 60 * 1000,
         secure: isProduction,
         sameSite: isProduction ? 'none' : 'lax'
