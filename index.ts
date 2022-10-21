@@ -9,6 +9,7 @@ import start from './src/db/connect'
 import login from './src/routes/login'
 import logout from './src/routes/logout'
 import register from './src/routes/register'
+import index from './src/routes/index'
 import test from './src/routes/test'
 import errorHandler from './src/middleware/errorHandler'
 
@@ -46,6 +47,7 @@ app.use(session({
 start()
 
 // Routing
+app.use('/', index)
 app.use('/test', test)
 app.use('/login', login)
 app.use('/stream', stream)

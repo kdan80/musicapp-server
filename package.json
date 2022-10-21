@@ -9,13 +9,15 @@
     "dev": "tsnd --exit-child --transpile-only -r tsconfig-paths/register -r dotenv/config -- index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "engines": { "node": "16.17.0" },
+  "engines": { 
+    "node": "16.17.0" 
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kdan80/musicapp-server.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kieran Dansey",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kdan80/musicapp-server/issues"
