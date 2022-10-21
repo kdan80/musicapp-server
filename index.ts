@@ -34,8 +34,8 @@ app.use(express.urlencoded({extended: true}))
 app.use(session({
     secret: config.session.secret,
     store: sessionStore,
-    resave: false,
-    saveUninitialized: true,
+    resave: true,
+    saveUninitialized: false,
     rolling: true,
     cookie: {
         httpOnly: true,
