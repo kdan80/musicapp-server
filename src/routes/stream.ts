@@ -19,10 +19,10 @@ const getPresignedUrl = (file: string): Promise<string> => {
     })
 }
 
-router.use('/',
-    //permitted_methods(['GET']),
-    authenticate_request
-)
+// router.use('/',
+//     permitted_methods(['GET']),
+//     authenticate_request
+// )
 
 router.get('/:id', async( req: Request, res: Response, next: NextFunction ) => {
     
