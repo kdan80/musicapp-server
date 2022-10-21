@@ -22,7 +22,7 @@ const app: Express = express()
 app.use(express.static(__dirname + '/public'))
 
 app.use(cors({
-    origin: '*',
+    origin: client_domain,
     credentials: true
 }))
 app.use(express.json())
