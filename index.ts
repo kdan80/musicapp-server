@@ -23,7 +23,7 @@ const app: Express = express()
 app.use(express.static(__dirname + '/public'))
 
 app.use(cors({
-    origin: true,
+    origin: 'http://192.168.1.21:4000',
     credentials: true,
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
 }))
