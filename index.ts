@@ -24,7 +24,8 @@ app.use(express.static(__dirname + '/public'))
 
 app.use(cors({
     origin: config.server.client_domain,
-    credentials: true
+    credentials: true,
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
 }))
 
 app.use(express.json())
