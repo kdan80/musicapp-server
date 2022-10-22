@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express'
 const permitted_methods = ( whitelist: string[] ) => {
 
     return ( req: Request, res: Response, next: NextFunction ) => {
-        if (!whitelist.includes(req.method)) throw new Error('UNPERMITTED_METHOD')
+        //if (!whitelist.includes(req.method)) throw new Error('UNPERMITTED_METHOD')
         return next()
     }
 };
