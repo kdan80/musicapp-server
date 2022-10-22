@@ -9,6 +9,7 @@
     "dev": "tsnd --exit-child --transpile-only -r tsconfig-paths/register -r dotenv/config -- index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "cacheDirectories": [".next/cache"],
   "engines": {
     "node": "16.17.0"
   },
