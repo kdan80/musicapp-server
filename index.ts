@@ -47,6 +47,8 @@ app.use(session({
     }
 }))
 
+if (isProduction) app.set("trust proxy", 1)
+
 // Start the database
 start()
 
