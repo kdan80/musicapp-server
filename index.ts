@@ -23,7 +23,7 @@ const app: Express = express()
 app.use(express.static(__dirname + '/public'))
 
 app.use(cors({
-    origin: config.server.client_domain,
+    origin: true,
     credentials: true,
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
 }))
