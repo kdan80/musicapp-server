@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express'
-import minioClient from '../storage/minio'
+import s3Client from '../storage/s3store'
 import config from '../config/config'
 import AlbumModel from '../models/album'
 import authenticate_request from '../middleware/authenticate_request'
@@ -7,16 +7,22 @@ import permitted_methods from '../middleware/permitted_methods'
 
 const router = express.Router();
 
-// Wrap the minioClient request in a promise
-const getPresignedUrl = (file: string): Promise<string> => {
-    
-    return new Promise((resolve, reject) => {
+const getSignedUrl = async(file: string) => {
+    try {
+        const url = await s3Client.getSignedUrlPromise(
+            'getObject',
+            {
+                Bucket: config.s3store.bucket,
+                Key: file,
+                Expires: 24 * 60
+            }
+        )
         
-        minioClient.presignedUrl('GET', config.minio.bucket, file, 24*60*60, function(err, presignedUrl) {
-            if (err) reject(err)
-            resolve(presignedUrl)
-        })
-    })
+        return url
+
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 router.use('/',
@@ -42,7 +48,7 @@ router.get('/:id', async( req: Request, res: Response, next: NextFunction ) => {
             const { filename } = track as any
             const file = `${albumPath}/${filename}`
 
-            const url = await getPresignedUrl(file)
+            const url = await getSignedUrl(file)
             if (!url) throw new Error('MINIO_ERROR')
             presignedUrls.push(url)
         }

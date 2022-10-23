@@ -14,12 +14,10 @@ declare global {
             readonly NODE_ENV: 'development' | 'production'
             readonly PORT: number
 
-            // Minio envars
-            readonly MINIO_PORT: number
-            readonly MINIO_ENDPOINT: string
-            readonly MINIO_BUCKET: string
-            readonly MINIO_SECRET_KEY: string
-            readonly MINIO_ACCESS_KEY: string
+            // AWS S3 envars
+            readonly AWS_BUCKET: string
+            readonly AWS_SECRET_KEY: string
+            readonly AWS_ACCESS_KEY: string
         }
     }
 }

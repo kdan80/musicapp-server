@@ -9,7 +9,9 @@
     "dev": "tsnd --exit-child --transpile-only -r tsconfig-paths/register -r dotenv/config -- index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "cacheDirectories": [".next/cache"],
+  "cacheDirectories": [
+    ".next/cache"
+  ],
   "engines": {
     "node": "16.17.0"
   },
@@ -25,6 +27,7 @@
   },
   "homepage": "https://github.com/kdan80/musicapp-server#readme",
   "dependencies": {
+    "aws-sdk": "^2.1238.0",
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.6.0",
     "cors": "^2.8.5",

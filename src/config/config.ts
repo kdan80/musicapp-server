@@ -1,3 +1,4 @@
+import { S3 } from 'aws-sdk'
 import * as dotenv from 'dotenv'
 dotenv.config()
 
@@ -24,9 +25,7 @@ interface Session {
     secret: string
 }
 
-interface Minio {
-    end_point: string
-    port: number
+interface S3Store {
     bucket: string
     access_key: string
     secret_key: string
@@ -36,7 +35,7 @@ interface Config {
     mongo: Mongo
     server: Server
     session: Session
-    minio: Minio
+    s3store: S3Store
     node_env: string
 }
 
@@ -65,19 +64,17 @@ const SESSION: Session = {
     secret: process.env.SESSION_SECRET
 }
 
-const MINIO: Minio = {
-    end_point: process.env.MINIO_ENDPOINT,
-    port: process.env.MINIO_PORT,
-    bucket: process.env.MINIO_BUCKET,
-    secret_key: process.env.MINIO_SECRET_KEY,
-    access_key: process.env.MINIO_ACCESS_KEY
+const S3STORE: S3Store = {
+    bucket: process.env.AWS_BUCKET,
+    access_key: process.env.AWS_ACCESS_KEY,
+    secret_key: process.env.AWS_SECRET_KEY
 }
 
 const config: Config = {
     mongo: MONGO,
     server: SERVER,
     session: SESSION,
-    minio: MINIO,
+    s3store: S3STORE,
     node_env: process.env.NODE_ENV
 }
 
