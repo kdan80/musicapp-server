@@ -42,8 +42,6 @@ app.use(session({
         maxAge: 20 * 60 * 1000,
         secure: isProduction,
         sameSite: isProduction ? 'none' : 'lax'
-        //secure: false,
-        //sameSite: 'none'
     }
 }))
 

@@ -8,24 +8,6 @@ import * as AWS from 'aws-sdk'
 
 const router = express.Router();
 
-// const getSignedUrl = async(file: string) => {
-//     try {
-//         const url = await s3Client.getSignedUrlPromise(
-//             'getObject',
-//             {
-//                 Bucket: config.s3store.bucket,
-//                 Key: file,
-//                 Expires: 24 * 60
-//             }
-//         )
-        
-//         return url
-
-//     } catch (err) {
-//         console.log(err)
-//     }
-// }
-
 const signer = new AWS.CloudFront.Signer( config.s3store.cf_access_key, config.s3store.cf_private_key)
 
 const getCloudfrontUrl = (file: string) => {
