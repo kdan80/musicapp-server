@@ -4,25 +4,42 @@ import config from '../config/config'
 import AlbumModel from '../models/album'
 import authenticate_request from '../middleware/authenticate_request'
 import permitted_methods from '../middleware/permitted_methods'
+import * as AWS from 'aws-sdk'
 
 const router = express.Router();
 
-const getSignedUrl = async(file: string) => {
-    try {
-        const url = await s3Client.getSignedUrlPromise(
-            'getObject',
-            {
-                Bucket: config.s3store.bucket,
-                Key: file,
-                Expires: 24 * 60
-            }
-        )
+// const getSignedUrl = async(file: string) => {
+//     try {
+//         const url = await s3Client.getSignedUrlPromise(
+//             'getObject',
+//             {
+//                 Bucket: config.s3store.bucket,
+//                 Key: file,
+//                 Expires: 24 * 60
+//             }
+//         )
         
-        return url
+//         return url
 
-    } catch (err) {
-        console.log(err)
-    }
+//     } catch (err) {
+//         console.log(err)
+//     }
+// }
+
+const signer = new AWS.CloudFront.Signer( config.s3store.cf_access_key, config.s3store.cf_private_key)
+
+const getCloudfrontUrl = (file: string) => {
+
+    // 2 days as milliseconds to use for link expiration
+    const twoDays = 2*24*60*60*1000
+
+    // sign a CloudFront URL that expires 2 days from now
+    const signedUrl = signer.getSignedUrl({
+        url: `${config.s3store.cf_url}/${file}`,
+        expires: Math.floor((Date.now() + twoDays)/1000), // Unix UTC timestamp for now + 2 days
+    })
+
+    return signedUrl
 }
 
 router.use('/',
@@ -30,8 +47,8 @@ router.use('/',
     authenticate_request
 )
 
+
 router.get('/:id', async( req: Request, res: Response, next: NextFunction ) => {
-    
 
     try {
 
@@ -48,7 +65,7 @@ router.get('/:id', async( req: Request, res: Response, next: NextFunction ) => {
             const { filename } = track as any
             const file = `${albumPath}/${filename}`
 
-            const url = await getSignedUrl(file)
+            const url = getCloudfrontUrl(file)
             if (!url) throw new Error('MINIO_ERROR')
             presignedUrls.push(url)
         }

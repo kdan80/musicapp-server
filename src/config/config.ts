@@ -29,6 +29,9 @@ interface S3Store {
     bucket: string
     access_key: string
     secret_key: string
+    cf_access_key: string
+    cf_private_key: string
+    cf_url: string
 }
 
 interface Config {
@@ -67,7 +70,10 @@ const SESSION: Session = {
 const S3STORE: S3Store = {
     bucket: process.env.AWS_BUCKET,
     access_key: process.env.AWS_ACCESS_KEY,
-    secret_key: process.env.AWS_SECRET_KEY
+    secret_key: process.env.AWS_SECRET_KEY,
+    cf_access_key: process.env.CF_ACCESS_KEY,
+    cf_private_key: process.env.CF_PRIVATE_KEY,
+    cf_url: process.env.CF_URL
 }
 
 const config: Config = {
